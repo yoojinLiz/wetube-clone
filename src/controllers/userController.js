@@ -54,9 +54,9 @@ export const postEdit= async(req,res) => {
     const sessionUsername = req.session.loggedInUser.username;
     const sessionEmail = req.session.loggedInUser.email;
     let existingUsername, existingEmail = false
-    if (!sessionUsername===username) {
+    if (sessionUsername!==username) {
         existingUsername = await User.exists({username});
-    } else if (!sessionEmail===email) {
+    } else if (sessionEmail!==email) {
         existingEmail = await User.exists({email});
     } 
     if (existingUsername || existingEmail) {
