@@ -1,6 +1,8 @@
 import User from "../models/User"
+import Video from "../models/Video"
 import bcrypt from "bcrypt"
 import fetch from "node-fetch"
+import session from "express-session";
 
 export const getJoin = (req,res) => res.render("join",{pageTitle: "Create Account"});
 export const postJoin = async(req,res) => {
@@ -50,7 +52,11 @@ export const getEdit= (req,res) => {
     return res.render("edit-profile", {pageTitle:"Edit Profile" })
 };
 export const postEdit= async(req,res) => {
-    const {session: {loggedInUser: {_id}}, body:{name, email, username, location}} = req;
+    const {
+        session: {loggedInUser: {_id, avatarUrl}}, 
+        body:{name, email, username, location}, 
+        file
+        } = req;
     const sessionUsername = req.session.loggedInUser.username;
     const sessionEmail = req.session.loggedInUser.email;
     let existingUsername, existingEmail = false
@@ -62,19 +68,19 @@ export const postEdit= async(req,res) => {
     if (existingUsername || existingEmail) {
         return res.status(400).render("edit-profile", {pageTitle: "Error", errorMessage:`Your username/email is already taken.`})
     } else {
-    const updatedUser = await User.findByIdAndUpdate(_id, {name, email, username, location}, {new:true});
+    const updatedUser = await User.findByIdAndUpdate(
+            _id, 
+            {avatarUrl: file ? file.path : avatarUrl, 
+                name, 
+                email, 
+                username, 
+                location}, 
+            {new:true});
     req.session.loggedInUser = updatedUser;
-    }   
-
-
-
-
-
-    
+    }
     return res.redirect("/users/edit")
 };
 export const remove = (req,res) => res.render("remove");
-
 export const startGithubLogin =(req,res) => {
     const baseUrl = "https://github.com/login/oauth/authorize";
     const config = {
@@ -140,8 +146,30 @@ export const finishGithubLogin = async(req,res) => {
     } else { 
     // error notification 
     console.log("no access_token")
-    }
-           
+    }          
 }
-
-
+export const getChangePassword = (req,res) => {
+    res.render("change-password",{pageTitle: "Change Password"})
+}
+export const postChangePassword = async(req,res) => {
+    const {oldPassword, newPassword, newPasswordConfirmation} = req.body;
+    const {_id, password} = req.session.loggedInUser; 
+    const ok = await bcrypt.compare(oldPassword,password)
+    if(!ok){
+        return res.status(400).render("change-password",{pageTitle:"Error", errorMessage:"Sorry, The old Password does not match your password."})
+    }
+    if (newPassword !== newPasswordConfirmation) {
+        return res.status(400).render("change-password",{pageTitle:"Error", errorMessage:"Sorry, The new Password and the new Password Confirmation don't match."})
+    }
+    const hashedNewPassword = await bcrypt.hash(newPassword,5);
+    await User.findByIdAndUpdate(_id, {password:hashedNewPassword});
+    req.session.destroy(); 
+	return res.redirect("/login");
+    //send notification
+}
+export const getProfile = async(req,res) => {
+    const {id}= req.params;
+    const user = await User.findById(id).populate("videos")
+    console.log("USER I FOUND" ,user)
+    res.render("profile",{pageTitle: user.username, user} )
+}

@@ -1,0 +1,20 @@
+extends base.pug
+include mixins/video
+
+block content
+    h2 #{user.name}'s Information
+    ul 
+        if (user.avatarUrl)
+            img(src="/"+ user.avatarUrl, width="140", height="160")
+        li Username :  #{user.username}
+        li Email : #{user.email}
+        li Name : #{user.name}
+        li location : #{user.location}
+    hr
+    
+    h4 Videos uploaded by #{user.name}
+        ul 
+            li
+                each video in user.videos 
+                    +video(video)
+                

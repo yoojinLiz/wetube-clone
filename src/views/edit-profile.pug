@@ -1,10 +1,18 @@
 extends base.pug
 
 block content  
-    h4=errorMessage
-    form(method="POST") 
+    if(errorMessage)
+        h4=errorMessage
+    if (loggedInUser.avatarUrl)
+        img(src="/"+ loggedInUser.avatarUrl, width="140", height="160", border-radius="20%")
+    form(method="POST", enctype="multipart/form-data")
+        label(for="avatar") Avatar
+        input(type="file", id="avatar" name="avatar" accept="image/*")
         input(placeholder="name", name="name", type="text", value=loggedInUser.name, required)
         input(placeholder="email", name="email", type="email", value=loggedInUser.email, equired)
         input(placeholder="username", name="username", type="text", value=loggedInUser.username, required)
         input(placeholder="location", name="location", type="text", value=loggedInUser.location, required)
         input(placeholder="submit", type="submit" value="Update Profile")
+        if (!loggedInUser.githubLoginOnly)
+            hr
+            a(href="change-password") Change Password &rarr;
