@@ -111,16 +111,14 @@ export const finishGithubLogin = async(req,res) => {
         const {access_token} = tokenRequest;
         const apiUrl = "https://api.github.com"
         const userData = await(
-             await fetch(`${apiUrl}/user`, { 
-                headers: { Authorization: `token ${access_token}` }
+            await fetch(`${apiUrl}/user`, { 
+                headers: { Authorization: `token ${access_token}`}
                  })).json();
-        const emailData = await (
+        const emailData = await(
             await fetch(`${apiUrl}/user/emails`, {
                 headers: {
-                    Authorization: `token ${access_token}`,
-                },
-            })
-        ).json();
+                    Authorization: `token ${access_token}`}
+            })).json();
         const emailObj = emailData.find((email) => email.primary===true && email.verified===true); 
         if (!emailObj) {
         //error notification
@@ -169,7 +167,6 @@ export const postChangePassword = async(req,res) => {
 }
 export const getProfile = async(req,res) => {
     const {id}= req.params;
-    const user = await User.findById(id).populate("videos")
-    console.log("USER I FOUND" ,user)
+    const user = await User.findById(id).populate("videos");
     res.render("profile",{pageTitle: user.username, user} )
 }
