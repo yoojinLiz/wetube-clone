@@ -9,7 +9,6 @@ import videoRouter from "./routers/videoRouter.js";
 import { localsMiddleware } from "./middlewares.js";
 import apiRouter from "./routers/apiRouter"
 
-
 const app = express();
 const logger = morgan("dev");
 app.use(logger);
