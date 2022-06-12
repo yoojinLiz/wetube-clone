@@ -5,7 +5,7 @@ block content
         h4=errorMessage
     div.edit-profile__avatar
         if (loggedInUser.avatarUrl)
-            img(src="/"+ loggedInUser.avatarUrl).avatar
+            img(src=loggedInUser.avatarUrl).avatar
     form(method="POST", enctype="multipart/form-data").edit-profile__form
         label(for="avatar") Avatar
         input(type="file", id="avatar" name="avatar" accept="image/*")

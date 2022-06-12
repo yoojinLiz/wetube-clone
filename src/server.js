@@ -16,12 +16,19 @@ app.use(logger);
 
 app.set("view engine","pug");
 app.set("views",process.cwd()+"/src/views");
+// app.use((req, res, next) => {
+//     res.header("Cross-Origin-Embedder-Policy", "require-corp");
+//     res.header("Cross-Origin-Opener-Policy", "same-origin");
+//     next();
+//     });
 app.use((req, res, next) => {
-    res.header("Cross-Origin-Embedder-Policy", "require-corp");
-    res.header("Cross-Origin-Opener-Policy", "same-origin");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+    );
     next();
     });
-
 app.use(express.urlencoded({extended: true}));
 app.use(express.json()); //string을 받아서 json으로 바꿔주는 middleware (JSON.parse를 해준다고 생각하면 됨  )
 
@@ -31,19 +38,13 @@ app.use(session({
      saveUninitialized:false,
      store: MongoStore.create({mongoUrl: process.env.DB_URL})
     }));
+
 app.use(flash());
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"))
 app.use("/static", express.static("assets"))
 app.use("/ffmpeg", express.static("node_modules/@ffmpeg/core/dist"))
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-    });
+
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
