@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
 	location : String,
 	avatarUrl: String ,
 	githubLoginOnly:{type: Boolean, default: false },
+	comments: [{type: mongoose.Schema.Types.ObjectId, ref:"Comment"}],
 	videos: [{type: mongoose.Schema.Types.ObjectId, ref:"Video",required:true}]
 });
 

@@ -4,7 +4,7 @@ block content
     form(method="POST")
         input(placeholder="username", name="username", type="text", required)
         input(placeholder="password", name="password", type="password", required)
-        input(placeholder="submit", type="submit" value="Login")
+        input(placeholder="submit", type="submit" value="Login")#loginBtn
         include partials/social-login
         if (errorMessage)
             small=errorMessage

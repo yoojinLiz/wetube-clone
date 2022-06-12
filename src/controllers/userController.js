@@ -3,6 +3,7 @@ import Video from "../models/Video"
 import bcrypt from "bcrypt"
 import fetch from "node-fetch"
 import session from "express-session";
+import req from "express/lib/request";
 
 export const getJoin = (req,res) => res.render("join",{pageTitle: "Create Account"});
 export const postJoin = async(req,res) => {
@@ -45,7 +46,10 @@ export const postLogin = async(req,res) => {
     return res.redirect("/");
 };
 export const logout = (req,res) => {
-	req.session.destroy(); // 세션 끊기
+    req.session.user = null;
+    res.locals.loggedInUser = req.session.user;
+    req.session.loggedIn = false;
+    req.flash("info"," Bye! ");
 	return res.redirect("/");
 }
 export const getEdit= (req,res) => {
@@ -170,3 +174,4 @@ export const getProfile = async(req,res) => {
     const user = await User.findById(id).populate("videos");
     res.render("profile",{pageTitle: user.username, user} )
 }
+

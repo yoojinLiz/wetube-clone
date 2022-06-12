@@ -1,0 +1,95 @@
+#videoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    position:relative;
+    i {
+        font-size: 18px;
+
+    }
+}
+video {
+    width: 100%;
+}
+
+#videoControlers{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    position:absolute;
+    bottom: 14px;
+    width: 98%;
+    height: 6%;
+    background-color: none;
+    button {
+        background-color: transparent;
+        color: white;
+        border: none;
+    }
+    font-size: 100%
+}
+#controlers {
+    display: flex;
+    justify-content: space-between;
+}
+#controlersLeft {
+    display: flex;
+    align-items: center;
+    width: 90%
+}
+#controlersLeft {
+    width: 10%
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    margin-right: 15px;
+    width: 50px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    background-size: 70% 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    background: white;
+    // cursor: ew-resize;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background .3s ease-in-out;
+  }
+  input[type=range]::-webkit-slider-runnable-track  {
+    -webkit-appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+  }
+
+  #timeline {
+      width: 100%;
+      margin-bottom: 10px;
+      height: 4px;
+  }
+
+
+// div#videoContainer
+// video(src="/" + video.fileUrl, width= "400", height="400" , controls=true) 
+// div#videoControlers
+//     button#play Play
+//     button#mute Mute
+//     div
+//         span#currentTime 00:00
+//         span /
+//         span#totalTime 00:00
+//     input(type="range", min="0", max="1", value="0.5", step="0.1")#volume
+//     div
+//         input(type="range", min="0", step="1", value="0")#timeline
+//     div
+//         button#fullscreen Enter Fullscreen

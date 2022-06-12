@@ -12,9 +12,9 @@ block content
             li location : #{user.location}
             hr
         h4 Videos uploaded by #{user.name}
-            div.video-grid
-                each video in user.videos 
-                    +video(video)
-                else 
-                    span.empty__message No videos yet 😢   
+        div.video-grid
+            each video in user.videos 
+                +video(video)
+            else 
+                span.empty__message No videos yet 😢   
                 

@@ -2,17 +2,61 @@ extends base.pug
  
 block content 
     div
-        h2=video.title
-        video(src="/" + video.fileUrl, width= "400", height="400" , controls=true) 
-        p=video.description
-        small=video.createdAt 
-        br
-        small Uploaded by: 
-        a(href=`/users/${String(video.owner._id)}`) #{video.owner.username}
+        div#videoContainer(data-videoId=video._id)
+            video(src="/" + video.fileUrl) 
+            div#videoControlers
+                div#timelineBox
+                    input(type="range", min="0", step="1", value="0")#timeline
+                div#controlers
+                    div#controlersLeft
+                        button#play 
+                            i.fa-solid.fa-play
+                        button#mute 
+                            i.fa-solid.fa-volume-high
+                        input(type="range", min="0", max="1", value="0.5", step="0.1")#volume
+                        div#timeDisplay
+                            span#currentTime 00:00
+                            span /
+                            span#totalTime 00:00 
+                    div#controlersRight
+                        div
+                            button#fullscreen 
+                                i.fa-solid.fa-expand
+        div.main-info
+            h2.video-title #{video.title}
+            small.video-views 조회 수 #{video.meta.views} 회  |         
+            small.video-createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+    
+        p.video-description #{video.description}
+        div.video-owner
+            img(src="/"+ video.owner.avatarUrl).header__avatar
+            small.video-uploadedBy
+                a(href=`/users/${String(video.owner._id)}`) #{video.owner.username}
 
     if (String(loggedInUser._id) === String(video.owner._id))
         br
-        h4 Control Video
-        a(href=`${video._id}/edit`) Edit Video &rarr;
-        br
-        a(href=`${video._id}/delete`) Delete Video &rarr;
+        div.video-controlBox
+            a(href=`${video._id}/edit`) Edit Video    &rarr;
+            a(href=`${video._id}/delete`) Delete Video &rarr;
+
+    if loggedIn
+        div.video__add-comments
+            form.video__comment-form#commentForm
+                textarea(cols="30", rows="5", placeholder="Write a nice commment...")
+                button Add Comment
+    div.video__comments
+        ul
+            each comment in video.comments.reverse()
+                li.video__comment(data-id=comment.id)
+                    div.comment-display
+                        div.comment-display-text
+                            i.fas.fa-comment
+                            span    #{comment.text}   
+                        div.comment-display-deleteIcon
+                            a(href="")
+                                span ❌
+
+block scripts
+    script(src="/static/js/videoPlayer.js")
+    if loggedIn
+        script(src="/static/js/commentSection.js")
