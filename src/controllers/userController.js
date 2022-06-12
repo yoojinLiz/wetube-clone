@@ -49,8 +49,11 @@ export const logout = (req,res) => {
     req.session.user = null;
     res.locals.loggedInUser = req.session.user;
     req.session.loggedIn = false;
+    res.locals.loggedIn = false;
     req.flash("info"," Bye! ");
-	return res.redirect("/");
+	console.log("loggedInUser", res.locals);
+    return res.redirect("/");
+    
 }
 export const getEdit= (req,res) => {
     return res.render("edit-profile", {pageTitle:"Edit Profile" })

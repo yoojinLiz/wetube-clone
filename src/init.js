@@ -1,4 +1,4 @@
-import "regenerator-runtime"
+import "regenerator-Runtime"
 import "dotenv/config"; // .env 파일의 변수를 process.env 안에 넣어주기
 import "./db"; //db 연결 
 import "./models/Video"; //db에서 모델을 import 해서 compile

@@ -1,0 +1,32 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/client/js/videoPlayer.js":
+/*!**************************************!*\
+  !*** ./src/client/js/videoPlayer.js ***!
+  \**************************************/
+/***/ (() => {
+
+eval("function _readOnlyError(name) { throw new TypeError(\"\\\"\" + name + \"\\\" is read-only\"); }\n\nvar video = document.querySelector(\"video\");\nvar playBtn = document.getElementById(\"play\");\nvar playIcon = playBtn.querySelector(\"i\");\nvar muteBtn = document.getElementById(\"mute\");\nvar muteIcon = muteBtn.querySelector(\"i\");\nvar currentTime = document.getElementById(\"currentTime\");\nvar totalTime = document.getElementById(\"totalTime\");\nvar volumeRange = document.getElementById(\"volume\");\nvar timeline = document.getElementById(\"timeline\");\nvar fullScreenBtn = document.getElementById(\"fullscreen\");\nvar fullScreenIcon = fullScreenBtn.querySelector(\"i\");\nvar videoContainer = document.getElementById(\"videoContainer\");\nvar videoControlers = document.getElementById(\"videoControlers\");\nvar controlsTimeout = null;\nvar controlsMovementTimeout = null;\nvar volumeValue = 0.5;\nvideo.volume = volumeValue;\n\nvar handlePlayClick = function handlePlayClick(event) {\n  if (video.paused) {\n    video.play();\n    playIcon.classList.remove(\"fa-play\");\n    playIcon.classList.add(\"fa-pause\");\n  } else {\n    video.pause();\n    playIcon.classList.remove(\"fa-pause\");\n    playIcon.classList.add(\"fa-play\");\n  }\n};\n\nvar handleMute = function handleMute(event) {\n  if (video.muted) {\n    video.muted = false;\n    muteIcon.classList.remove(\"fa-volume-xmark\");\n    muteIcon.classList.add(\"fa-volume-high\");\n  } else {\n    video.muted = true;\n    muteIcon.classList.remove(\"fa-volume-high\");\n    muteIcon.classList.add(\"fa-volume-xmark\");\n  } // muteBtn.innerText = video.muted ? \"Unmute\" : \"Mute\" ;\n\n\n  volumeRange.value = video.muted ? \"0\" : volumeValue;\n};\n\nvar handleVolumeChange = function handleVolumeChange(event) {\n  ㄴ;\n  var value = event.target.value;\n\n  if (video.muted) {\n    video.muted = false;\n    muteBtn.innerText = \"Mute\";\n  }\n\n  volumeValue = value;\n  video.volume = value;\n};\n\nvar formatTime = function formatTime(seconds) {\n  return new Date(seconds * 1000).toISOString().substring(14, 19);\n};\n\nvar handleLoadedMetaData = function handleLoadedMetaData(event) {\n  totalTime.innerText = formatTime(Math.floor(video.duration));\n  timeline.max = Math.floor(video.duration);\n};\n\nvar handleTimeUpdate = function handleTimeUpdate(event) {\n  currentTime.innerText = formatTime(Math.floor(video.currentTime));\n  timeline.value = Math.floor(video.currentTime);\n};\n\nvar handleTimelineChange = function handleTimelineChange() {\n  video.currentTime = timeline.value;\n};\n\nvar handleFullScreen = function handleFullScreen() {\n  var fullscreen = document.fullscreenElement;\n\n  if (fullscreen) {\n    // 현재 fullscreen 모드라면 \n    document.exitFullscreen();\n    fullScreenIcon.classList.remove(\"fa-compress\");\n    fullScreenIcon.classList.add(\"fa-expand\");\n  } else {\n    // fullscreen이 아니라면\n    videoContainer.requestFullscreen();\n    fullScreenIcon.classList.remove(\"fa-expand\");\n    fullScreenIcon.classList.add(\"fa-compress\");\n  }\n};\n\nvar hideControls = function hideControls() {\n  return videoControlers.classList.remove(\"showing\");\n};\n\nvar handleMouseMove = function handleMouseMove() {\n  if (controlsTimeout) {\n    clearTimeout(controlsTimeout);\n    controlsTimeout = null;\n  }\n\n  if (controlsMovementTimeout) {\n    clearTimeout(controlsMovementTimeout);\n    null, _readOnlyError(\"controlsMovementTimeout\");\n  }\n\n  videoControlers.classList.add(\"showing\");\n  var controlsMovementTimeout = setTimeout(hideControls, 3000);\n};\n\nvar handleMouseLeave = function handleMouseLeave() {\n  var controlsTimeout = setTimeout(hideControls, 3000);\n};\n\nvar shortcuts = function shortcuts(event) {\n  var key = event.key,\n      code = event.code;\n\n  if (key === \"F\" || key === \"f\") {\n    handleFullScreen();\n  } else if (key === \"Escape\") {\n    console.log(\"escape!\");\n    var fullscreen = document.fullscreenElement;\n\n    if (fullscreen) {\n      document.exitFullscreen();\n      fullScreenBtn.innerText = \"Enter Full Screen\";\n    }\n  } else if (key === \" \") {\n    handlePlayClick();\n  }\n};\n\nvar handleEnded = function handleEnded() {\n  var id = videoContainer.dataset.videoid;\n  fetch(\"/api/videos/\".concat(id, \"/view\"), {\n    method: \"POST\"\n  });\n};\n\nplay.addEventListener(\"click\", handlePlayClick);\nmuteBtn.addEventListener(\"click\", handleMute);\nvolumeRange.addEventListener(\"input\", handleVolumeChange);\nvideo.addEventListener(\"loadedmetadata\", handleLoadedMetaData);\nvideo.addEventListener(\"timeupdate\", handleTimeUpdate);\nvideo.addEventListener(\"ended\", handleEnded);\ntimeline.addEventListener(\"input\", handleTimelineChange);\nfullScreenBtn.addEventListener(\"click\", handleFullScreen);\nvideo.addEventListener(\"mousemove\", handleMouseMove);\nvideo.addEventListener(\"mouseleave\", handleMouseLeave);\nwindow.addEventListener(\"keydown\", shortcuts);\n\n//# sourceURL=webpack://wetube/./src/client/js/videoPlayer.js?");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["./src/client/js/videoPlayer.js"]();
+/******/ 	
+/******/ })()
+;
