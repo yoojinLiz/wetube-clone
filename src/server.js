@@ -36,6 +36,14 @@ app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"))
 app.use("/static", express.static("assets"))
 app.use("/ffmpeg", express.static("node_modules/@ffmpeg/core/dist"))
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+    });
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);

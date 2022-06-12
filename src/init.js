@@ -9,4 +9,4 @@ import app from "./server";
 const PORT = process.env.PORT || 4000;
 
 const handlelistener = () => console.log(`✅ Server is listening on port http://localhost:${PORT}'`);
-app.listen(PORT, handlelistener); //서버가 시작되면 자동으로 callback 실행 
+app.listen(PORT, handlelistener); //서버가 시작되면 자동으로 callback 실행  
