@@ -3,11 +3,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 90%;
+    width: 100%;
     position:relative;
     i {
         font-size: 18px;
-
     }
 }
 video {
@@ -20,7 +19,7 @@ video {
     justify-content: center;
     position:absolute;
     bottom: 14px;
-    width: 98%;
+    width: 99%;
     height: 6%;
     background-color: none;
     button {
@@ -43,7 +42,7 @@ video {
     width: 10%
 }
 
-input[type="range"] {
+#timeline, #volume  {
     -webkit-appearance: none;
     margin-right: 15px;
     width: 50px;
@@ -55,7 +54,7 @@ input[type="range"] {
     cursor: pointer;
     
   }
-  input[type="range"]::-webkit-slider-thumb {
+  input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 7px;
     width: 7px;

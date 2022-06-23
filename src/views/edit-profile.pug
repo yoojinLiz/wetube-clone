@@ -3,17 +3,18 @@ extends base.pug
 block content  
     if(errorMessage)
         h4=errorMessage
-    div.edit-profile__avatar
-        if (loggedInUser.avatarUrl)
-            img(src=loggedInUser.avatarUrl).avatar
+    div.profile__avatar
+        div.profile__img-wrapper
+            if (loggedInUser.avatarUrl)
+                    img(src=loggedInUser.avatarUrl).avatar
     form(method="POST", enctype="multipart/form-data").edit-profile__form
         label(for="avatar") Avatar
-        input(type="file", id="avatar" name="avatar" accept="image/*")
-        input(placeholder="name", name="name", type="text", value=loggedInUser.name, required)
-        input(placeholder="email", name="email", type="email", value=loggedInUser.email, equired)
-        input(placeholder="username", name="username", type="text", value=loggedInUser.username, required)
-        input(placeholder="location", name="location", type="text", value=loggedInUser.location, required)
-        input(placeholder="submit", type="submit" value="Update Profile")
+        input(type="file", id="avatar" name="avatar" accept="image/*").form-file
+        input(placeholder="name", name="name", type="text", value=loggedInUser.name, required).form-text
+        input(placeholder="email", name="email", type="email", value=loggedInUser.email, equired).form-email
+        input(placeholder="username", name="username", type="text", value=loggedInUser.username, required).form-text
+        input(placeholder="location", name="location", type="text", value=loggedInUser.location, required).form-text
+        input(placeholder="submit", type="submit" value="Update Profile").form-submit#edit-profile-submit
         if (!loggedInUser.githubLoginOnly)
             div.edit-profile__password
                 a(href="change-password") Change Password &rarr;

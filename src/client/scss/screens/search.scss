@@ -1,17 +1,14 @@
 .search__form {
-    margin-bottom: 60px;
     display: flex;
     align-items: center;
     position: relative;
+    width:500px;
+    max-width: 800px;
     input {
         all: unset;
-        padding: 15px 20px;
         border-radius: 5px;
-        background-color: black;
-        margin-bottom: 5px;
-        font-size: 16px;
-        color: white;
-        width: 90%;
+        border-color: black;
+        font-size: 18px;
     }
     button {
         all: unset;

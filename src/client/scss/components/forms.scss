@@ -2,34 +2,42 @@ form {
     max-width: 420px;
     margin: 0 auto;
     padding: 20px;
-    background-color: rgba(0,0,0,0.5);
+    // background-color: rgba(0,0,0,0.5);
     border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.2);
+
+label {
+    color: black;
+    display: block;
+    margin: 5px 0px;
 }
-input:not(input[type="range"]) {
+
+input:not(input[type=range]) {
     all: unset;
     padding: 15px 20px;
     border-radius: 5px;
-    background-color: black;
     margin-bottom: 5px;
     font-size: 16px;
-    color: white;
-    // text-align: center;
     width: 90%;
-    border: 1px solid rgba(255,255,255,0.15);
+    color:black;
+    border: 1px solid $mainBlack;
     &::placeholder {
-        color: rgba(255,255,255,0.7);
+        color: black;
+    }
     }
 }
+.form-file, .form-text, .form-email, .form-password {
+background-color: black;
+color: black;
+}
 
-input[type="submit"],
-.social__btn, #loginBtn {
+.form-submit, #loginBtn, #edit-profile-submit, #upload-submit {
     padding: 12px 20px;
-    background-color: rgba($color: $red, $alpha: 0.9);
     text-align: center;
     cursor: pointer;
     display: block;
     max-width: 420px;
     border-radius: 5px;
+    background-color: rgba($color: $red, $alpha: 0.9);
     color: white;
 }

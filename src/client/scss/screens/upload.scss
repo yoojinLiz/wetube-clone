@@ -1,0 +1,16 @@
+#videoRecorder {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    #preview {
+        width: 30%;
+    }
+    #actionBtn {
+        font-size: 16px;
+        margin: 10px 0px;
+        padding: 7px 21px;
+        border-radius: 20px;
+        border:none;
+    }
+}

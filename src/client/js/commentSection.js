@@ -4,7 +4,12 @@ const videoContainer = document.getElementById("videoContainer");
 const commentContainer = document.getElementById("commentContainer");
 const form = document.getElementById("commentForm");
 const deleteIcon = document.querySelectorAll(".deleteIcon")
-console.log(deleteIcon);
+const textbox = document.getElementById("add-comment__input");
+const addCommentBox = document.getElementById("add-comment__btn")
+
+const showAddCommentBtn = () => {
+  addCommentBox.classList.remove("no-display");
+}
 
 const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -81,3 +86,5 @@ const handleCommentDelete = async(event) => {
 if (deleteIcon){
   deleteIcon.forEach((btn) => btn.addEventListener("click", handleCommentDelete));
 }
+
+textbox.addEventListener("focus",showAddCommentBtn);

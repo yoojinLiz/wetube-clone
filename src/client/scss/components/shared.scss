@@ -6,7 +6,8 @@
 } 
 .video-grid { 
     display: grid;
-    gap: 50px;
+    column-gap: 20px;
+    row-gap: 40px;
     grid-template-columns: repeat(4, minmax(0,1fr));
 }
 .auth-switch{
@@ -15,4 +16,7 @@
     a{
         text-decoration: underline;
     }
+}
+.no-display{
+    display:none;
 }

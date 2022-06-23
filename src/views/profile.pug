@@ -5,13 +5,15 @@ block content
     div.profile__data
         ul 
             if (user.avatarUrl)
-                img(src="/"+ user.avatarUrl).avatar
+                div.profile__img-wrapper
+                    img(src=user.avatarUrl).avatar
             li Username :  #{user.username}
             li Email : #{user.email}
             li Name : #{user.name}
             li location : #{user.location}
             hr
-        h4 Videos uploaded by #{user.name}
+        h4 Videos uploaded by 
+            span #{user.name}
         div.video-grid
             each video in user.videos 
                 +video(video)

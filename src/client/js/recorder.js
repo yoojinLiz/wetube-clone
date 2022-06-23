@@ -62,14 +62,14 @@ const handleDownload = async() => {
     URL.revokeObjectURL(mp4Url);
     URL.revokeObjectURL(thumbUrl);
 
-    actionBtn.innerText = "Start Recording";
+    actionBtn.innerText = "🔴 Start Recording";
     actionBtn.addEventListener("click",handleStartBtn);
     actionBtn.disabled = false; 
 };
 
 
 const handleStop = async() => {
-    actionBtn.innerText = "Download Recording";
+    actionBtn.innerText = " ⬇️ Download Recording";
 		actionBtn.removeEventListener("click",handleStop);
 		actionBtn.addEventListener("click",handleDownload);
 		recorder.stop()
@@ -100,5 +100,6 @@ const init = async() => {
 init()
 
 actionBtn.addEventListener("click", handleStartBtn);
+
 
 

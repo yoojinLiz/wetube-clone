@@ -10,10 +10,11 @@ export const trending = async(req,res)=> {
 export const watch = async(req,res) => {
     const {id}= req.params;
 	const video = await Video.findById(id).populate("owner").populate("comments");
+    const videos = await Video.find({}).sort({createdAt:"desc"}).populate("owner");
     if(video===null) {
         return res.status(404).render("404", {pageTitle: "Video Not Found"});
     }
-    return res.render("watch",{pageTitle:`Watching : ${video.title}`, video});
+    return res.render("watch",{pageTitle:`Watching : ${video.title}`, video, videos});
 };
 
 export const getEdit =async(req,res) => {
@@ -87,10 +88,12 @@ export const deleteVideo = async(req,res) => {
 
 export const search = async(req,res) => {
     const {keyword}=req.query;
+    console.log("keyword",keyword);
     let videos = [];
     if(keyword) {
-        videos = await Video.find({title: keyword}).populate("owner");
+        videos = await Video.find({title: {$regex: new RegExp(keyword,"i")}}).populate("owner");
 	 }
+     console.log("videos",videos)
     res.render("search",{pageTitle:"Search Video", videos});
 } 
 
