@@ -20,3 +20,29 @@
 .no-display{
     display:none;
 }
+
+@keyframes errorjumping  {  
+	0% {
+		transform:translateY(0px) ; 
+	}
+    50% {
+        transform:translateY(-5px) ; 
+    }
+	to {
+		transform:translateY(0px) ; 
+        
+	}
+}
+
+.error-message {
+    text-decoration: underline;
+    padding: 4px 5px;
+    border-radius: 20px;
+    color: $red;
+    font-size: 20px;
+    text-align: center;
+    max-width: 420px;
+    margin-bottom: 10px;
+    animation: errorjumping 1.5s ease-out infinite ;
+
+}

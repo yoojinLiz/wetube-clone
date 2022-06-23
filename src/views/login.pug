@@ -2,8 +2,8 @@ extends base.pug
 
 block content   
     form(method="POST")
-        input(placeholder="username", name="username", type="text", required).form-submit
-        input(placeholder="password", name="password", type="password", required).form-password
+        input(placeholder="USERNAME", name="username", type="text", required).form-submit
+        input(placeholder="PASSWORD", name="password", type="password", required).form-password
         input(placeholder="submit", type="submit" value="Login")#loginBtn.form-submit
         include partials/social-login
         if (errorMessage)
