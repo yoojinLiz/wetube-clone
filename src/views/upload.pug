@@ -12,7 +12,7 @@ block content
             label(for="thumb") Thumbnail File
             input(type="file", accept="image/*", required, id="thumb", name="thumb").form-file
             input(name="title", type="text", placeholder="Title", required, maxlength=80).form-text
-            input(name="description", type="text", placeholder="Description", required, minlength=5).form-text
+            input(name="description", type="text", placeholder="Description", required).form-text
             input(name="hashtags", type="text", placeholder="Hashtags, separated by comma", required).form-text
             input(type="submit", value="Upload Video").form-submit#upload-submit
 

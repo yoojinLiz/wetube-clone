@@ -90,11 +90,15 @@ export const search = async(req,res) => {
     const {keyword}=req.query;
     console.log("keyword",keyword);
     let videos = [];
+    let errorMessage;
     if(keyword) {
         videos = await Video.find({title: {$regex: new RegExp(keyword,"i")}}).populate("owner");
 	 }
+     else {
+        errorMessage= "Please put your search keyword in the search box"
+     }
      console.log("videos",videos)
-    res.render("search",{pageTitle:"Search Video", videos});
+    res.render("search",{pageTitle:"Search Video", videos, errorMessage});
 } 
 
 export const registerView = async(req,res) => {

@@ -4,6 +4,8 @@ import bcrypt from "bcrypt"
 import fetch from "node-fetch"
 import session from "express-session";
 import req from "express/lib/request";
+import { redirect } from "express/lib/response";
+// import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
 
 export const getJoin = (req,res) => res.render("join",{pageTitle: "Create Account"});
 export const postJoin = async(req,res) => {
@@ -177,4 +179,67 @@ export const getProfile = async(req,res) => {
     const user = await User.findById(id).populate("videos");
     res.render("profile",{pageTitle: user.username, user} )
 }
+export const startKakaoLogin= (req,res) => {
+    const baseUrl = "https://kauth.kakao.com/oauth/authorize";  
+    const config = {
+        client_id:process.env.KA_CLIENT, 
+        state:process.env.KA_STATE,
+        redirect_uri:"http://localhost:4000/users/kakao/finish",
+        response_type:"code"
+    };
+    const params = new URLSearchParams(config).toString();
+    const finalUrl= `${baseUrl}?${params}`;
+    res.redirect(finalUrl);
+};
+export const finishKakaoLogin= async(req,res) => {
+    const baseUrl = "https://kauth.kakao.com/oauth/token"; 
+    const config = {
+        grant_type:"authorization_code", 
+        client_id:process.env.KA_CLIENT, 
+        redirect_uri:"http://localhost:4000/users/kakao/finish",
+        code: req.query.code, 
+    };
+    const params = new URLSearchParams(config).toString();
+    const finalUrl= `${baseUrl}?${params}`;
+    const tokenRequest= await(await fetch(finalUrl, {
+        method:"POST",
+        headers: {
+            Accept:"application/json"
+        }
+    })).json();
+    if("access_token" in tokenRequest) {
+        const {access_token} = tokenRequest;
+        const apiUrl = "https://kapi.kakao.com/v2/user/me";
+        const userData = await(
+            await fetch(apiUrl, { 
+                method: "GET",
+                headers: { 
+                    Authorization: `Bearer ${access_token}`
+                }
+                })).json();
+        let user = await User.findOne({email:userData.kakao_account.email});
+        if(!user) { 
+            user = await User.create({
+                    avatarUrl: userData.properties.profile_image,
+                    name: userData.properties.nickname, 
+                    username: userData.properties.nickname, 
+                    email: userData.kakao_account.email, 
+                    password: "", 
+                    location: "", 
+                    githubLoginOnly: true,})
+        }
+        req.session.loggedIn = true;
+        req.session.loggedInUser = user;
+        return res.redirect("/");  
+    } else { 
+    // error notification 
+    console.log("no access_token")
+    }   
 
+
+
+
+
+
+
+};

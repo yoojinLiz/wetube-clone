@@ -26,7 +26,7 @@ block content
                                     button#fullscreen 
                                         i.fa-solid.fa-expand
                 div.main-info
-                    span.video-hashtags=video.hashtags
+                    span.video-hashtags=video.hashtags.join().replaceAll(",","\t")
                     h2.video-title #{video.title}
                     small.video-views 조회 수 #{video.meta.views} 회  |         
                     small.video-createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})

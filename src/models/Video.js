@@ -4,9 +4,9 @@ const videoSchema = new mongoose.Schema({  //schema 메서드로 새로운 스�
 	title: {type: String, required:true, trim:true, maxLength:80},
 	fileUrl: {type: String, required: true},
 	thumbUrl: {type: String, required: true},
-	description: {type: String, required:true, trim:true, minLength:5},
+	description: {type: String, required:true, trim:true},
 	createdAt: {type: Date, required:true, default: Date.now},
-	hashtags: [{type: String, trim: true}], //string이 배열의 첫 요소로 저장됨 
+	hashtags: [{type: String, trim: true}], //string이 배열의 첫 요소로 저장됨 (https://www.notion.so/6-7-6-28-MongoDB-and-Mongoose-fe779a2aeb8149dc83c20d8756a783df#5e10cf62b859474188d522e63d478fc8)
     meta: {
 		views: {type: Number, default:0, required:true},
 		rating: {type: Number, default:0, required:true},

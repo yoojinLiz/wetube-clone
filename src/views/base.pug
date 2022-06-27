@@ -15,6 +15,7 @@ html(lang="en")
 			+message("success", messages.success)
 		include partials/header.pug
 		main
+			div.error-message=errorMessage
 			block content
 		include partials/footer.pug 
 		script(src="/static/js/main.js")
