@@ -35,8 +35,8 @@ app.use(session({
 
 app.use(flash());
 app.use(localsMiddleware);
-app.use("/uploads", express.static("uploads"))
-app.use("/static", express.static("assets"))
+app.use("/uploads", express.static("uploads")) //static files serving
+app.use("/static", express.static("assets")) //static files serving
 app.use("/ffmpeg", express.static("node_modules/@ffmpeg/core/dist"))
 
 app.use("/", rootRouter);

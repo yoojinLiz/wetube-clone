@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
 	password : {type:String},
 	name : {type:String, required: true, uppercase:true, trim:true},
 	location : {type: String, uppercase:true, trim:true},
-	avatarUrl: String ,
+	avatarUrl: {type: String, default: "../uploads/avatars/def-profile.png" },
 	githubLoginOnly:{type: Boolean, default: false },
 	comments: [{type: mongoose.Schema.Types.ObjectId, ref:"Comment"}],
 	videos: [{type: mongoose.Schema.Types.ObjectId, ref:"Video",required:true}]

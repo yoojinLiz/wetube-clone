@@ -40,17 +40,44 @@ export const publicOnlyMiddleware = (req,res,next) => {
 	}
 }
 
-export const avatarUpload = multer({
-	dest:"uploads/avatars", 
-	limits : {
-		filesize: 3000000, //단위는 byte (= 3MB)
-	},
-	storage: multerUploader
-});
+// export const avatarUpload = multer({
+// 	dest:"uploads/avatars", 
+// 	limits : {
+// 		filesize: 3000000, //단위는 byte (= 3MB)
+// 	},
+// 	storage: multerUploader,
+// });
+
+
+export const avatarUploadHandler= (req, res, next) => {
+    const avatarUpload = multer({
+		dest:"uploads/avatars", 
+		limits : {
+			fileSize: 3000000, //단위는 byte (= 3MB)
+		},
+		storage: multerUploader,
+	}).single('avatar');
+    avatarUpload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            return res.render(
+				"edit-profile",
+				{pageTitle: "Error", errorMessage:"Your file is too big. Please use the file less than 3MB"}
+				)			// A Multer error occurred when uploading.
+        } else if (err) {
+			return res.render(
+				"edit-profile",
+				{pageTitle: "Error", errorMessage:"Unknown Error. Sorry."}
+				)            // An unknown error occurred when uploading.
+        }
+        next()
+    })
+}
+
+
 export const videoUpload = multer({
 	dest:"uploads/videos", 
 	limits : {
 		filesize: 10000, //단위는 byte (= 10MB)
 },
-storage: multerUploader
+	storage: multerUploader
 });
