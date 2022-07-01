@@ -86,22 +86,22 @@ export const videoUploadHandler= (req, res, next) => {
     const videoUpload = multer({
 		dest:"uploads/videos", 
 		limits : {
-			fileSize: 10000000, //단위는 byte (= 10MB)
+			fileSize: 1000000000000000, //단위는 byte (= 10MB)  
 		},
 		storage: multerUploader,
-	}).single('video').fields([
+	}).fields([
 		{ name: "video", maxCount:1 },
 		{ name: "thumb", maxCount:1 },
 	 ]);
     videoUpload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             return res.render(
-				"edit-profile",
+				"upload",
 				{pageTitle: "Error", errorMessage:"Your file is too big. Please use the file less than 10MB"}
 				)			// A Multer error occurred when uploading.
         } else if (err) {
 			return res.render(
-				"edit-profile",
+				"upload",
 				{pageTitle: "Error", errorMessage:"Unknown Error. Sorry."}
 				)            // An unknown error occurred when uploading.
         }
