@@ -39,15 +39,16 @@ const handleMute = (event) => {
         muteIcon.classList.add("fa-volume-xmark");
 
 	}
-	// muteBtn.innerText = video.muted ? "Unmute" : "Mute" ;
     volumeRange.value = video.muted ? "0" : volumeValue ; 
 }
-const handleVolumeChange = (event) =>  {ㄴ
-	const {target: {value},
+const handleVolumeChange = (event) =>  {
+	const {
+        target: {value},
 		}= event;	
 	if (video.muted) {
 		video.muted = false;
-		muteBtn.innerText = "Mute";	
+        muteIcon.classList.remove("fa-volume-xmark");
+        muteIcon.classList.add("fa-volume-high");
 } 
 	volumeValue = value;
 	video.volume = value ;
