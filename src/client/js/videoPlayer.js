@@ -79,25 +79,30 @@ const handleFullScreen = () => {
         fullScreenIcon.classList.add("fa-compress");
     }
 }
-
-const hideControls = () => videoControlers.classList.remove("showing");
-
+const hideControls = () => videoControlers.classList.add("no-display");
 const handleMouseMove = () => {
-    if(controlsTimeout) {
+    if(controlsTimeout) { // 마우스가 비디오 밖에 있다가 들어오는 경우
+        console.log("I'm going to clear controlsTimeout", controlsTimeout);
         clearTimeout(controlsTimeout);
         controlsTimeout = null;
     }
-    if(controlsMovementTimeout) {
+    if(controlsMovementTimeout) { 
+        console.log("I'm going to clear controlsMovementTimeout: ", controlsMovementTimeout);
+        //마우스가 움직일때마다 기존에 생성된 timeout을 clear
         clearTimeout(controlsMovementTimeout) ; 
         controlsMovementTimeout = null ;
     }
-    videoControlers.classList.add("showing");
-    const controlsMovementTimeout = setTimeout(hideControls,3000);
+    console.log("mouse is moving");
+    videoControlers.classList.remove("no-display");
+    //마우스가 움직일 때마다 timeout 생성
+    controlsMovementTimeout = setTimeout(hideControls,3000);
+    console.log("concontrolsMovementTimeout has been made: ", controlsMovementTimeout)
 }
 const handleMouseLeave = () => {
-    const controlsTimeout=  setTimeout(hideControls, 3000);
+    console.log("mouse is leaving");
+    controlsTimeout=  setTimeout(hideControls, 3000);
+    console.log("controlsTimeout has been made: ", controlsTimeout)
 }
-
 const shortcuts = (event) => {
     const {key, code} = event;
     if(key === "F"|| key ==="f") {
@@ -113,12 +118,10 @@ const shortcuts = (event) => {
         handlePlayClick();
     }
 };
-
 const handleEnded = () => {
     const id = videoContainer.dataset.videoid;
     fetch(`/api/videos/${id}/view`, {method:"POST"});
 }
-
 play.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click",handleMute );
 volumeRange.addEventListener("input",handleVolumeChange);

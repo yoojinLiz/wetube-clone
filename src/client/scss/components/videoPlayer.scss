@@ -27,7 +27,7 @@ video {
         color: white;
         border: none;
     }
-    font-size: 100%
+    font-size: 100%;
 }
 #controlers {
     display: flex;
@@ -76,19 +76,8 @@ video {
       margin-bottom: 10px;
       height: 4px;
   }
+  #timeDisplay {
+      color: white;
+  }
 
-
-// div#videoContainer
-// video(src="/" + video.fileUrl, width= "400", height="400" , controls=true) 
-// div#videoControlers
-//     button#play Play
-//     button#mute Mute
-//     div
-//         span#currentTime 00:00
-//         span /
-//         span#totalTime 00:00
-//     input(type="range", min="0", max="1", value="0.5", step="0.1")#volume
-//     div
-//         input(type="range", min="0", step="1", value="0")#timeline
-//     div
-//         button#fullscreen Enter Fullscreen
+ 
