@@ -11,6 +11,8 @@ const fullScreenBtn = document.getElementById("fullscreen");
 const fullScreenIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const videoControlers = document.getElementById("videoControlers");
+const searchInput = document.getElementById("search-input");
+const commentInput = document.getElementById("add-comment__input");
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
@@ -82,41 +84,35 @@ const handleFullScreen = () => {
 const hideControls = () => videoControlers.classList.add("no-display");
 const handleMouseMove = () => {
     if(controlsTimeout) { // 마우스가 비디오 밖에 있다가 들어오는 경우
-        console.log("I'm going to clear controlsTimeout", controlsTimeout);
         clearTimeout(controlsTimeout);
         controlsTimeout = null;
     }
     if(controlsMovementTimeout) { 
-        console.log("I'm going to clear controlsMovementTimeout: ", controlsMovementTimeout);
         //마우스가 움직일때마다 기존에 생성된 timeout을 clear
         clearTimeout(controlsMovementTimeout) ; 
         controlsMovementTimeout = null ;
     }
-    console.log("mouse is moving");
     videoControlers.classList.remove("no-display");
     //마우스가 움직일 때마다 timeout 생성
     controlsMovementTimeout = setTimeout(hideControls,3000);
-    console.log("concontrolsMovementTimeout has been made: ", controlsMovementTimeout)
 }
 const handleMouseLeave = () => {
-    console.log("mouse is leaving");
     controlsTimeout=  setTimeout(hideControls, 3000);
-    console.log("controlsTimeout has been made: ", controlsTimeout)
 }
 const shortcuts = (event) => {
-    const {key, code} = event;
-    if(key === "F"|| key ==="f") {
-        handleFullScreen()
-    } else if(key === "Escape") {
-        console.log("escape!");
-        const fullscreen = document.fullscreenElement;
-        if(fullscreen) {
-        document.exitFullscreen();
-        fullScreenBtn.innerText= "Enter Full Screen"
+    const {key} = event;
+    if (searchInput !== document.activeElement && commentInput !== document.activeElement) {
+        if(key === "F"|| key ==="f") {
+            handleFullScreen()
+        } else if(key === "Escape") {
+            const fullscreen = document.fullscreenElement;
+            if(fullscreen) {
+                document.exitFullscreen();
+            }
+        } else if (key === " ") {    
+            handlePlayClick();
         }
-    } else if (key === " ") {    
-        handlePlayClick();
-    }
+    } 
 };
 const handleEnded = () => {
     const id = videoContainer.dataset.videoid;
