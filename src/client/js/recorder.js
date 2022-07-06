@@ -78,7 +78,7 @@ const handleStartBtn = async() => {
     actionBtn.innerText = "Stop Recording";
     actionBtn.removeEventListener("click", handleStartBtn);
     actionBtn.addEventListener("click", handleStop);
-    recorder= new MediaRecorder(stream) ;
+    recorder= new MediaRecorder(stream,{mimeType:"video/webm"}) ;
 		recorder.ondataavailable = (event) => {
 			videoFile = URL.createObjectURL(event.data); 
 			console.log("videoFile",videoFile); // -> 콘솔에 어떤 Url이 남겨진다! 

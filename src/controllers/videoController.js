@@ -25,6 +25,7 @@ export const getEdit =async(req,res) => {
         return res.render("404", {pageTitle: "Video Not Found"});
     }
     if (String(video.owner) !== String(_id)) { 
+        req.flash("error","Only the owner of the video is authorized to edit.");
         return res.status(403).redirect("/");
     }
     return res.render("edit",{pageTitle:`Editing : ${video.title}`, video});
@@ -39,6 +40,7 @@ export const postEdit = async(req,res) => {
         return res.render("404", {pageTitle: "Video Not Found"});
     }
     if (String(video.owner) !== String(_id)) { 
+        req.flash("error","Only the owner of the video is authorized to edit.");
         return res.status(403).redirect("/");
     }
     try { 
@@ -80,6 +82,7 @@ export const deleteVideo = async(req,res) => {
         return res.render("404", {pageTitle: "Video Not Found"});
     }
     if (String(video.owner) !== String(_id)) { 
+        req.flash("error","Only the owner of the video is authorized to delete.");
         return res.status(403).redirect("/");
     }
     await Video.findByIdAndDelete(id);

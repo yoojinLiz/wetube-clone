@@ -236,10 +236,4 @@ export const finishKakaoLogin= async(req,res) => {
     console.log("no access_token")
     }   
 
-
-
-
-
-
-
 };
