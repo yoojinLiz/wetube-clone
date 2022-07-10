@@ -9,7 +9,14 @@ export const trending = async(req,res)=> {
 
 export const watch = async(req,res) => {
     const {id}= req.params;
-	const video = await Video.findById(id).populate("owner").populate("comments");
+	const video = await Video.findById(id).populate("owner").populate({
+        path: "comments",
+        populate: {
+            path: "owner",
+            model: "User",
+        }
+    });
+    
     const videos = await Video.find({}).sort({createdAt:"desc"}).populate("owner");
     if(video===null) {
         return res.status(404).render("404", {pageTitle: "Video Not Found"});
@@ -120,7 +127,6 @@ export const createComment = async (req, res) => {
       body: { text },
       params: { id },
     } = req;
-    console.log("user,text,id",loggedInUser,text,id);
     const video = await Video.findById(id);
     if (!video) {
       return res.sendStatus(404);
@@ -132,21 +138,23 @@ export const createComment = async (req, res) => {
     });
     video.comments.push(comment._id);
     video.save();
-    return res.status(201).json({ newCommentId: comment._id });
+    return res.status(201).json({ newCommentId: comment._id, newCommentOwner: loggedInUser.username, newCommentAvatarUrl: loggedInUser.avatarUrl });
   };
 
 
   export const deleteComment = async (req, res) => {
-    const { commentId, videoId } = req.body; // comment id, video id
+    const commentId = req.params.id;
     const { _id } = req.session.loggedInUser; // user id
-    const { owner } = await Comment.findById(id);
-    const video = await Video.findById(videoId);
-    console.log(commentId, videoId, _id, owner, video)
-    if (String(owner) !== _id) return res.sendStatus(404);
-    else {
-      await Comment.findByIdAndDelete(id);
-      video.comments.splice(video.comments.indexOf(videoId), 1);
-      video.save();
-      return res.sendStatus(201);
+    const comment = await Comment.findById(commentId);
+    const videoId = req.body;
+    if (String(comment.owner) !== _id) {
+        console.log("The logged-in user is not the owner of the comment ");
+        return res.sendStatus(404);
+    } else {
+        await Comment.findByIdAndDelete(commentId);    
+        const video = await Video.findById(videoId);
+        video.comments.splice(video.comments.indexOf(videoId), 1);
+        video.save();
+        return res.sendStatus(201);
     }
-  };
+    };

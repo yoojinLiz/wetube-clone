@@ -30,7 +30,6 @@ block content
                     h2.video-title #{video.title}
                     small.video-views 조회 수 #{video.meta.views} 회  |         
                     small.video-createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
-            
                 div.video-owner
                     div#video-owner-img-holder
                         a(href=`/users/${String(video.owner._id)}`)
@@ -47,23 +46,25 @@ block content
             if loggedIn
                 div.video__add-comments
                     div.add-comment-avatar
-                        div.img-wrapper
-                            img(src=`${loggedInUser.avatarUrl}`) 
+                        img(src=`${loggedInUser.avatarUrl}`).img-wrapper
                     form.video__comment-form#commentForm
                         input(type="text", placeholder="Write a nice commment...")#add-comment__input
-                        button.no-display#add-comment__btn Add Comment
+                        span.no-display#cancel-comment__btn Cancel 
+                        button.no-display#add-comment__btn Add 
             div.video__comments
                 ul
                     each comment in video.comments.reverse()
                         li.video__comment#commentContainer(data-id=comment.id)
                             div.comment-display
+                                div.comment-display-avatar
+                                    img(src=`${comment.owner.avatarUrl}`).img-wrapper
                                 div.comment-display-text
-                                    i.fas.fa-comment
-                                    span    #{comment.text}   
-                                div.comment-display-deleteIcon
+                                    span.comment-display-owner #{comment.owner.username}
+                                    span.comment-display-content #{comment.text}   
                                     if (loggedIn)
                                         if (String(loggedInUser._id) === String(comment.owner._id))
-                                            span.deleteIcon ❌
+                                            div.comment-display-deleteIcon
+                                                i.fa-solid.fa-trash-can
         div#recommend-video-part
             div
                 each video in videos 

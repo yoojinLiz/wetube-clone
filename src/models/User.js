@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
 	location : {type: String, uppercase:true, trim:true},
 	avatarUrl: {type: String, default: "../uploads/avatars/def-profile.png" },
 	githubLoginOnly:{type: Boolean, default: false },
-	comments: [{type: mongoose.Schema.Types.ObjectId, ref:"Comment"}],
 	videos: [{type: mongoose.Schema.Types.ObjectId, ref:"Video",required:true}]
 });
 

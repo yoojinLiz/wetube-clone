@@ -3,50 +3,82 @@ import "regenerator-runtime";
 const videoContainer = document.getElementById("videoContainer");
 const commentContainer = document.getElementById("commentContainer");
 const form = document.getElementById("commentForm");
-const deleteIcon = document.querySelectorAll(".deleteIcon")
 const textbox = document.getElementById("add-comment__input");
-const addCommentBox = document.getElementById("add-comment__btn")
+const addCommentBtn = document.getElementById("add-comment__btn")
+const cancelCommentBtn = document.getElementById("cancel-comment__btn")
+let deleteIcons = document.querySelectorAll(".comment-display-deleteIcon");
 
-const showAddCommentBtn = () => {
-  addCommentBox.classList.remove("no-display");
+
+// (시작) 코멘트 입력하는 칸 활성화 시 댓글 취소 버튼과 등록 버튼 보이게 하기 
+const hideCommentBtn = () => {
+  addCommentBtn.classList.add("no-display");
+  cancelCommentBtn.classList.add("no-display");
+  const textarea = document.getElementById("add-comment__input")
+  textarea.value = "";
 }
+const showCommentBtn = () => {
+  addCommentBtn.classList.remove("no-display");
+  cancelCommentBtn.classList.remove("no-display");
+}
+textbox.addEventListener("focus",showCommentBtn);
+if(cancelCommentBtn) {
+cancelCommentBtn.addEventListener("click",hideCommentBtn);
+}
+// (끝) 코멘트 입력하는 칸 활성화 시 댓글 취소 버튼과 등록 버튼 보이게 하기 
 
-const addComment = (text, id) => {
+const addComment = (text,id,commentOwner,avatarUrl) => {
   const videoComments = document.querySelector(".video__comments ul");
   const newComment = document.createElement("li");
   newComment.dataset.id = id;
   newComment.className = "video__comment";
-  const newCommentDisplay = document.createElement("div");
-  const newCommentDisplayText = document.createElement("div");
-  const newCommentDisplayDelete = document.createElement("div");
-  newCommentDisplay.className="comment-display";
-  newCommentDisplayText.className="comment-display-text";
-  newCommentDisplayDelete.className="comment-display-deleteIcon";
-  const icon = document.createElement("i");
-  icon.className = "fas fa-comment";
-  const span = document.createElement("span");
-  span.innerText = ` ${text}`;
-  const span2 = document.createElement("span");
-  span2.innerText = "❌";
-  newComment.appendChild(newCommentDisplay);
-  newCommentDisplay.appendChild(newCommentDisplayText);
-  newCommentDisplay.appendChild(newCommentDisplayDelete);
-  newCommentDisplayText.appendChild(icon);
-  newCommentDisplayText.appendChild(span);
-  newCommentDisplayDelete.appendChild(span2);
   videoComments.prepend(newComment);
-  console.log("refresh?");
+
+  const newCommentDisplay = document.createElement("div");
+  newCommentDisplay.className="comment-display";
+  newComment.appendChild(newCommentDisplay);
+
+  const newCommentDisplayAvatar = document.createElement("div");
+  newCommentDisplayAvatar.className="comment-display-avatar";
+  newCommentDisplay.appendChild(newCommentDisplayAvatar);
+
+  const newCommentDisplayText = document.createElement("div");
+  newCommentDisplayText.className="comment-display-text";
+  newCommentDisplay.appendChild(newCommentDisplayText);
+  
+  const avatarImg = document.createElement("img")
+  avatarImg.src=avatarUrl;
+  newCommentDisplayAvatar.appendChild(avatarImg);
+  
+  const owner = document.createElement("span");
+  owner.innerText = ` ${commentOwner}`;
+  owner.className = "comment-display-owner";
+  newCommentDisplayText.appendChild(owner);
+
+  const content = document.createElement("span");
+  content.innerText = ` ${text}`;
+  content.className = "comment-display-content";
+  newCommentDisplayText.appendChild(content);
+  
+  const newCommentDisplayDelete = document.createElement("div");
+  newCommentDisplayDelete.className="comment-display-deleteIcon";
+  newCommentDisplayText.appendChild(newCommentDisplayDelete);
+
+  const deleteIcon = document.createElement("i");
+  deleteIcon.classList.add("fa-solid");
+  deleteIcon.classList.add("fa-trash-can");
+  newCommentDisplayDelete.appendChild(deleteIcon);
+  deleteIcon.addEventListener("click", handleFakeCommentDelete);
 };
 
 const handleSubmit = async (event) => {
   event.preventDefault();
-  const textarea = form.querySelector("textarea");
+  console.log("form", form);
+  const textarea = document.getElementById("add-comment__input")
   const text = textarea.value;
   const videoId = videoContainer.dataset.videoid;
   if (text === "") {
     return;
   }
-  //   div#videoContainer(data-videoId=video._id)
   const response = await fetch(`/api/videos/${videoId}/comment`, {
     method: "POST",
     headers: {
@@ -56,35 +88,43 @@ const handleSubmit = async (event) => {
   });
   if (response.status === 201) {
     textarea.value = "";
-    const { newCommentId } = await response.json();
-    addComment(text, newCommentId);
+    const commentInfo = await response.json();
+    const commentId = commentInfo.newCommentId
+    const commentAvatar = commentInfo.newCommentAvatarUrl
+    const commentOwner = commentInfo.newCommentOwner
+    addComment(text, commentId, commentOwner, commentAvatar);
   }
 };
+
+const handleFakeCommentDelete = async(event) => {
+  const commentId = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id; 
+  const videoId = videoContainer.dataset.videoid;
+  console.log("videoId",videoId);
+  const response = await fetch(`/api/comments/${commentId}`, {
+    method: "DELETE",
+    body: videoId,
+  })
+  if (response.status === 201) {
+    event.target.parentElement.parentElement.parentElement.parentElement.remove();
+  }
+} 
+
+const handleCommentDelete = async(event) => {
+  const commentId = event.target.parentElement.parentElement.parentElement.parentElement.dataset.id; 
+  const videoId = videoContainer.dataset.videoid;
+  console.log("videoId",videoId);
+  const response = await fetch(`/api/comments/${commentId}`, {
+    method: "DELETE",
+    body: videoId,
+  })
+  if (response.status === 201) {
+    event.target.parentElement.parentElement.parentElement.parentElement.remove();
+  }
+}
 
 if (form) {
   form.addEventListener("submit", handleSubmit);
 }
-
-const handleCommentDelete = async(event) => {
-  console.log(event)
-  const commentId = commentContainer.dataset.id;
-  const videoId = videoContainer.dataset.videoid;
-  console.log("commentId",commentId)
-  const response = await fetch(`/api/comments/${commentId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ commentId, videoId }),
-  });
-  console.log("resonse", response)
-  if (response.status === 201) {
-      event.target.parentNode.parentNode.parentNode.remove();
-    }
-  }
-
-if (deleteIcon){
-  deleteIcon.forEach((btn) => btn.addEventListener("click", handleCommentDelete));
+if (deleteIcons){
+  deleteIcons.forEach(icon => icon.addEventListener("click", handleCommentDelete));
 }
-
-textbox.addEventListener("focus",showAddCommentBtn);
