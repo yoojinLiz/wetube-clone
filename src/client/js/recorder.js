@@ -31,12 +31,9 @@ const handleDownload = async() => {
         corePath: '/ffmpeg/ffmpeg-core.js',
         log: true
         });
-
     console.log("ffmpeg is ready!")
-    
     await ffmpeg.load();
     console.log("ffmpeg has been loaded!")
-
     ffmpeg.FS("writeFile", files.input, await fetchFile(videoFile));
     console.log("writeFile has been loaded!")
 

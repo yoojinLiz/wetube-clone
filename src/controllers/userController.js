@@ -95,7 +95,7 @@ export const startGithubLogin =(req,res) => {
     const config = {
         client_id:process.env.GH_CLIENT,   
         allow_signup:false,
-        scope:"read:user read:email"
+        scope:"read:user user:email"
     };
     const params = new URLSearchParams(config).toString();
     const finalUrl= `${baseUrl}?${params}`;
@@ -106,31 +106,37 @@ export const finishGithubLogin = async(req,res) => {
     const config = {
         client_id:process.env.GH_CLIENT,
         client_secret:process.env.GH_SECRET,
-		code: req.query.code, 
+		code: req.query.code, //authorize 후 github에서 받은 temporary code. 이를 사용해서 access token  요청 
     };
     const params = new URLSearchParams(config).toString();
     const finalUrl= `${baseUrl}?${params}`;
+    console.log("finalUrl", finalUrl)
     const tokenRequest= await(await fetch(finalUrl, {
 			method:"POST",
 			headers: {
 				Accept:"application/json"
 			}
 	})).json();
+    console.log(tokenRequest);
     if("access_token" in tokenRequest) {
         const {access_token} = tokenRequest;
         const apiUrl = "https://api.github.com"
         const userData = await(
             await fetch(`${apiUrl}/user`, { 
-                headers: { Authorization: `token ${access_token}`}
+                headers: { 
+                    Authorization: `token ${access_token}`
+                }
                  })).json();
+        console.log("userData", userData);
         const emailData = await(
             await fetch(`${apiUrl}/user/emails`, {
                 headers: {
                     Authorization: `token ${access_token}`}
             })).json();
+        console.log("emailData", emailData)
         const emailObj = emailData.find((email) => email.primary===true && email.verified===true); 
         if (!emailObj) {
-        //error notification
+        // error notification
         console.log("no email object");
         }
         let user = await User.findOne({email:emailObj.email});
@@ -148,11 +154,10 @@ export const finishGithubLogin = async(req,res) => {
         }
         req.session.loggedIn = true;
         req.session.loggedInUser = user;
-
         return res.redirect("/");        
     } else { 
-    // error notification 
-    console.log("no access_token")
+    //error notification 
+    console.log("no access_token");
     }          
 }
 export const getChangePassword = (req,res) => {

@@ -3,6 +3,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    p {
+        margin-bottom: 30px;
+        color: $red;
+        font-size: 18px;
+        text-align: center;
+    }
     #preview {
         width: 30%;
     }
