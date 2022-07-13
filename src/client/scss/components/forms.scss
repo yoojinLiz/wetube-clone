@@ -5,6 +5,12 @@ form:not(#commentForm) {
     // background-color: rgba(0,0,0,0.5);
     border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.2);
+    #form-header {
+        color: black;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 18px;
+    }
 
 label {
     color: black;
@@ -31,7 +37,7 @@ background-color: black;
 color: black;
 }
 
-.form-submit, #loginBtn, #edit-profile-submit, #upload-submit, #join-submit,#change-password-submit {
+.form-submit, #loginBtn, #edit-profile-submit, #upload-submit, #join-submit,#change-password-submit, #edit-submit {
     padding: 12px 20px;
     text-align: center;
     cursor: pointer;

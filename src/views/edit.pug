@@ -1,9 +1,9 @@
 extends base.pug
 
 block content 
-    h4 Update Video 
     form(method="POST")
+        p#form-header You can edit the information of your video!  
         input(name="title", placeholder="Video Title", value=video.title, maxlength=80,  required)
         input(name="description", type="text", placeholder="Description", required,value=video.description)
         input(name="hashtags", type="text", placeholder="Hashtags, separated by comma", required, value=video.hashtags.join())
-        input(type="submit", value="Save")
+        input(type="submit", value="Save")#edit-submit
