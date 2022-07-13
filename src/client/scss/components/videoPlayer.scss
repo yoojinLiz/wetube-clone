@@ -10,7 +10,10 @@
     }
 }
 video {
+    // width: 900px;
     width: 100%;
+    // max-width: 900px;
+    min-width: 600px;
 }
 
 #videoControlers{

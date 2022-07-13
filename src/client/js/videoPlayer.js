@@ -14,13 +14,14 @@ const videoControlers = document.getElementById("videoControlers");
 const searchInput = document.getElementById("search-input");
 const commentInput = document.getElementById("add-comment__input");
 
+video.play();
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
 let volumeValue =0.5
 video.volume= volumeValue;
 
 const handlePlayClick = (event) => {
-    if(video.paused){
+    if(video.paused){ 
 		video.play();
         playIcon.classList.remove("fa-play")
         playIcon.classList.add("fa-pause")
@@ -109,7 +110,8 @@ const shortcuts = (event) => {
             if(fullscreen) {
                 document.exitFullscreen();
             }
-        } else if (key === " ") {    
+        } else if (key === " ") {   
+            event.preventDefault();   
             handlePlayClick();
         }
     } 
