@@ -13,6 +13,9 @@ header {
         width: 2%;
     };
     .header__logo {
+        width:10%;
+        display: flex;
+        align-items: center;
         i {
         font-size: 34px;
         color: $red;
@@ -20,14 +23,11 @@ header {
         span {
         font-size: 24px;
         text-align: justify;
-        color: $rose;
-        font-weight: 545;
-        letter-spacing:-0.9mm;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: black;
+        letter-spacing:-0.7mm;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
         }
-        width:10%;
-        display: flex;
-        align-items: center;
+ 
     }
     .search__form {
         display: flex;
@@ -75,6 +75,12 @@ header {
         font-weight:600;
         text-transform: uppercase;
         position: relative;
+         #userEditBtn,  {
+            margin-top: 4px;
+        }
+        #uploadBtn,#logoutBtn {
+            margin-top: 6px;
+        }
     }
     i {
         font-size: 20px;

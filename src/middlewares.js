@@ -40,15 +40,6 @@ export const publicOnlyMiddleware = (req,res,next) => {
 	}
 }
 
-// export const avatarUpload = multer({
-// 	dest:"uploads/avatars", 
-// 	limits : {
-// 		filesize: 3000000, //단위는 byte (= 3MB)
-// 	},
-// 	storage: multerUploader,
-// });
-
-
 export const avatarUploadHandler= (req, res, next) => {
     const avatarUpload = multer({
 		dest:"uploads/avatars", 
@@ -73,14 +64,6 @@ export const avatarUploadHandler= (req, res, next) => {
     })
 }
 
-
-// export const videoUpload = multer({
-// 	dest:"uploads/videos", 
-// 	limits : {
-// 		filesize: 10000, //단위는 byte (= 10MB)
-// },
-// 	storage: multerUploader
-// });
 
 export const videoUploadHandler= (req, res, next) => {
     const videoUpload = multer({

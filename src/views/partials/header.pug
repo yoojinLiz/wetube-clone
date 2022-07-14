@@ -2,7 +2,7 @@ header
     i.fa-solid.fa-bars
     a(href="/").header__logo
         i.fab.fa-youtube
-        span YouTube
+        span DanceTube
     form(method="GET" action="search").search__form
         input(type="text", placeholder="Search by title", name="keyword").search__form-input#search-input
         button.search__form-btn
@@ -28,11 +28,8 @@ header
                         span Logout
                 li
                     a(href=`/users/${loggedInUser._id}`)
-                        if (loggedInUser.avatarUrl === "")
-                            span 🙂
-                        else 
-                            div.img-wrapper
-                                img(src=loggedInUser.avatarUrl).header__avatar
+                        div#header-avatar
+                            img(src=loggedInUser.avatarUrl).header__avatar
             else 
                 li
                     a(href="/login") Login

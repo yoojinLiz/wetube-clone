@@ -3,6 +3,7 @@ import User from "../models/User"
 import Comment from "../models/Comment"
 
 export const trending = async(req,res)=> {
+    console.log(req.session.loggedInUser)
 	const videos = await Video.find({}).sort({createdAt:"desc"}).populate("owner");
 	return res.render("home", {pageTitle:"Home", videos});
 };
