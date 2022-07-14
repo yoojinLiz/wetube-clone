@@ -99,3 +99,18 @@ export const videoUploadHandler= (req, res, next) => {
         next()
     })
 }
+
+export const cors = (req, res, next) => {
+    res.header("Cross-Origin-Embedder-Policy", "require-corp");
+    res.header("Cross-Origin-Opener-Policy", "same-origin");
+    next();
+    };
+
+	// app.use((req, res, next) => {
+	// 	res.setHeader("Access-Control-Allow-Origin", "*");
+	// 	res.header(
+	// 	"Access-Control-Allow-Headers",
+	// 	"Origin, X-Requested-With, Content-Type, Accept"
+	// 	);
+	// 	next();
+	// 	});

@@ -29,7 +29,7 @@ header
                 li
                     a(href=`/users/${loggedInUser._id}`)
                         div#header-avatar
-                            img(src=loggedInUser.avatarUrl).header__avatar
+                            img(crossorigin="",src=loggedInUser.avatarUrl).header__avatar
             else 
                 li
                     a(href="/login") Login

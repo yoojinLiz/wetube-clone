@@ -4,17 +4,9 @@ mixin video(info)
     div.video-mixin__data
       div.video-mixin__img
         div.img-wrapper
-          img(src=info.owner.avatarUrl).avatar
+          img(crossorigin="", src=info.owner.avatarUrl).avatar
       div.video-mixin__info
         span.video-mixin__title=info.title
         div.video-mixin__meta
           div #{info.owner.name} 
           div #{info.meta.views}회 
-
-    //- p=info.description
-
-    //- ul 
-    //-   each hashtag in info.hashtags 
-    //-       li=hashtag
-    //- small=info.createdAt
-    //- hr ㅈ
