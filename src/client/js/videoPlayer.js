@@ -14,9 +14,11 @@ const videoControlers = document.getElementById("videoControlers");
 const searchInput = document.getElementById("search-input");
 const commentInput = document.getElementById("add-comment__input");
 
-video.play();
+video.autoplay= true;
+
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
+
 let volumeValue =0.5
 video.volume= volumeValue;
 
@@ -125,7 +127,7 @@ play.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click",handleMute );
 volumeRange.addEventListener("input",handleVolumeChange);
 // video.addEventListener("loadedmetadata", handleLoadedMetaData);
-video.addEventListener("canplay", handleLoadedMetaData);
+video.addEventListener("loadeddata", handleLoadedMetaData);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("ended", handleEnded);
 timeline.addEventListener("input", handleTimelineChange);
