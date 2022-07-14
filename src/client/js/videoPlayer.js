@@ -14,7 +14,13 @@ const videoControlers = document.getElementById("videoControlers");
 const searchInput = document.getElementById("search-input");
 const commentInput = document.getElementById("add-comment__input");
 
-video.autoplay= true;
+// video.autoplay= true;
+
+if(video.paused){ 
+    video.play();
+    playIcon.classList.remove("fa-play")
+    playIcon.classList.add("fa-pause")
+} 
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
@@ -121,13 +127,15 @@ const shortcuts = (event) => {
 };
 const handleEnded = () => {
     const id = videoContainer.dataset.videoid;
+    playIcon.classList.remove("fa-pause")
+    playIcon.classList.add("fa-play")
     fetch(`/api/videos/${id}/view`, {method:"POST"});
 }
 play.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click",handleMute );
 volumeRange.addEventListener("input",handleVolumeChange);
-// video.addEventListener("loadedmetadata", handleLoadedMetaData);
-setTimeout(handleLoadedMetaData,0);
+video.addEventListener("canplay", handleLoadedMetaData);
+handleLoadedMetaData();
 video.addEventListener("loadstart", handleLoadedMetaData);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("ended", handleEnded);
