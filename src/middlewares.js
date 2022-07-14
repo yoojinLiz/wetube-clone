@@ -2,6 +2,8 @@ import multer from "multer";
 import multerS3 from "multer-s3";
 import aws from "aws-sdk";
 
+const isHeroku = process.env.NODE_ENV === "production" ;
+
 const s3 = new aws.S3 ({
 credentials: {
 	accessKeyId : process.env.AWS_ID,
@@ -9,10 +11,15 @@ credentials: {
 }
 })
 
-const multerUploader = multerS3 ({
+const s3imageUploader = multerS3 ({
 	s3:s3,
-	bucket: "wetube-yoojinoh",
-	acl: "public-read",
+	bucket: "wetube-yoojinoh/images", // image 디렉토리로 지정 
+	acl: "public-read",// ACL(객체에 대한 접근 권한). public-read로 전달해야 files are publicly-read. 
+})
+const s3videoUploader = multerS3 ({
+	s3:s3,
+	bucket: "wetube-yoojinoh/videos", // videos 디렉토리로 지정 
+	acl: "public-read",// ACL(객체에 대한 접근 권한). public-read로 전달해야 files are publicly-read. 
 })
 
 // localsMiddleware는 server.js에서 app.use로 사용된다! 
@@ -20,6 +27,7 @@ export const localsMiddleware = (req,res,next) => {
     res.locals.loggedIn= Boolean(req.session.loggedIn);
     res.locals.loggedInUser= req.session.loggedInUser || {};
     res.locals.siteName= "Wetube";
+	res.locals.isHeroku = isHeroku ;
     next();
 } 
 
@@ -46,7 +54,7 @@ export const avatarUploadHandler= (req, res, next) => {
 		limits : {
 			fileSize: 3000000, //단위는 byte (= 3MB)
 		},
-		storage: multerUploader,
+		storage: isHeroku? s3imageUploader : undefined,
 	}).single('avatar');
     avatarUpload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
@@ -71,7 +79,7 @@ export const videoUploadHandler= (req, res, next) => {
 		limits : {
 			fileSize: 1000000000000000, //단위는 byte (= 10MB)  
 		},
-		storage: multerUploader,
+		storage: isHeroku? s3videoUploader : undefined,
 	}).fields([
 		{ name: "video", maxCount:1 },
 		{ name: "thumb", maxCount:1 },

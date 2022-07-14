@@ -2,8 +2,9 @@ import Video from "../models/Video"
 import User from "../models/User"
 import Comment from "../models/Comment"
 
+
+
 export const trending = async(req,res)=> {
-    console.log(req.session.loggedInUser)
 	const videos = await Video.find({}).sort({createdAt:"desc"}).populate("owner");
 	return res.render("home", {pageTitle:"Home", videos});
 };
@@ -69,8 +70,8 @@ export const postUpload = async (req, res) => {
             title,
             description,
             hashtags: Video.hashtagFormatting(hashtags),
-            fileUrl: video[0].location,
-            thumbUrl: thumb[0].location,
+            fileUrl: res.locals.isHeroku? video[0].location : video[0].path,
+            thumbUrl: res.locals.isHeroku? thumb[0].location : thumb[0].path,
             owner: _id
         });
         const user = await User.findById(_id);

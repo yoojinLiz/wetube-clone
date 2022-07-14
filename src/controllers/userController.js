@@ -79,7 +79,7 @@ export const postEdit= async(req,res) => {
     } else {
     const updatedUser = await User.findByIdAndUpdate(
             _id, 
-            {avatarUrl: file ? file.location : avatarUrl, 
+            {avatarUrl: file ? (res.locals.isHeroku? file.location : file.path) : avatarUrl, 
                 name, 
                 email, 
                 username, 
