@@ -60,6 +60,7 @@ const formatTime = (seconds) => {
 	return new Date(seconds *1000).toISOString().substring(14,19);
 }
 const handleLoadedMetaData = (event) => {
+    console.log("metadata has been loaded!")
 	totalTime.innerText =	formatTime(Math.floor(video.duration));
     timeline.max = Math.floor(video.duration);
 }
