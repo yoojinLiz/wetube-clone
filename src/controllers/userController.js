@@ -222,6 +222,7 @@ export const finishKakaoLogin= async(req,res) => {
                     Authorization: `Bearer ${access_token}`
                 }
                 })).json();
+        console.log("userData", userData);
         let user = await User.findOne({email:userData.kakao_account.email});
         if(!user) { 
             user = await User.create({
