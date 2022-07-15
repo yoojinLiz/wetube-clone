@@ -15,6 +15,7 @@ const searchInput = document.getElementById("search-input");
 const commentInput = document.getElementById("add-comment__input");
 
 // video.autoplay= true;
+console.log(fullScreenBtn);
 
 if(video.paused){ 
     video.play();
@@ -73,6 +74,11 @@ const handleLoadedMetaData = (event) => {
     timeline.max = Math.floor(video.duration);
 }
 const handleTimeUpdate = (event) => {
+    //test start
+	totalTime.innerText =	formatTime(Math.floor(video.duration));
+    timeline.max = Math.floor(video.duration);
+    // test done
+
     currentTime.innerText =	formatTime(Math.floor(video.currentTime));
     timeline.value = Math.floor(video.currentTime);
 }
@@ -81,14 +87,19 @@ const handleTimelineChange = () => {
 }
 const handleFullScreen = () => {
     const fullscreen = document.fullscreenElement;
+    console.log("fullscreen button is clicked!")
     if(fullscreen) { // 현재 fullscreen 모드라면 
         document.exitFullscreen();
         fullScreenIcon.classList.remove("fa-compress");
         fullScreenIcon.classList.add("fa-expand");
+        video.removeAttribute('id');
+        video.id="videoScreen";
     } else { // fullscreen이 아니라면
         videoContainer.requestFullscreen();
         fullScreenIcon.classList.remove("fa-expand");
         fullScreenIcon.classList.add("fa-compress");
+        video.removeAttribute('id');
+        video.id="videoFullScreen";
     }
 }
 const hideControls = () => videoControlers.classList.add("no-display");
@@ -135,8 +146,7 @@ play.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click",handleMute );
 volumeRange.addEventListener("input",handleVolumeChange);
 video.addEventListener("canplay", handleLoadedMetaData);
-handleLoadedMetaData();
-video.addEventListener("loadstart", handleLoadedMetaData);
+// handleLoadedMetaData();
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("ended", handleEnded);
 timeline.addEventListener("input", handleTimelineChange);
