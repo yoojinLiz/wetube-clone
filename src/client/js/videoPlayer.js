@@ -14,8 +14,9 @@ const videoControlers = document.getElementById("videoControlers");
 const searchInput = document.getElementById("search-input");
 const commentInput = document.getElementById("add-comment__input");
 
-// video.autoplay= true;
-console.log(fullScreenBtn);
+const timelineColorChange = (input) => {
+    input.style.background = `linear-gradient(to right, red 0%, red ${(input.value-input.min)/(input.max-input.min)*100}%, #DEE2E6 ${(input.value-input.min)/(input.max-input.min)*100}%, #DEE2E6 100%)`
+}
 
 if(video.paused){ 
     video.play();
@@ -30,7 +31,7 @@ let volumeValue =0.5
 video.volume= volumeValue;
 
 const handlePlayClick = (event) => {
-    if(video.paused){ 
+    if(video.paused){     
 		video.play();
         playIcon.classList.remove("fa-play")
         playIcon.classList.add("fa-pause")
@@ -69,21 +70,21 @@ const formatTime = (seconds) => {
 	return new Date(seconds *1000).toISOString().substring(14,19);
 }
 const handleLoadedMetaData = (event) => {
-    console.log("metadata has been loaded!")
 	totalTime.innerText =	formatTime(Math.floor(video.duration));
     timeline.max = Math.floor(video.duration);
 }
 const handleTimeUpdate = (event) => {
-    //test start
-	totalTime.innerText =	formatTime(Math.floor(video.duration));
-    timeline.max = Math.floor(video.duration);
-    // test done
-
+	// totalTime.innerText =	formatTime(Math.floor(video.duration));
+    // timeline.max = Math.floor(video.duration);
     currentTime.innerText =	formatTime(Math.floor(video.currentTime));
     timeline.value = Math.floor(video.currentTime);
+    timelineColorChange(timeline);
+
 }
 const handleTimelineChange = () => {
     video.currentTime = timeline.value ;
+    timelineColorChange(timeline);
+
 }
 const handleFullScreen = () => {
     const fullscreen = document.fullscreenElement;
@@ -146,7 +147,6 @@ play.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click",handleMute );
 volumeRange.addEventListener("input",handleVolumeChange);
 video.addEventListener("canplay", handleLoadedMetaData);
-// handleLoadedMetaData();
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("ended", handleEnded);
 timeline.addEventListener("input", handleTimelineChange);
