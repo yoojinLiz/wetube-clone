@@ -40,7 +40,8 @@ const handleDownload = async() => {
     await ffmpeg.run("-i", files.input, "-r","60",files.output)
     await ffmpeg.run("-i",files.input,"-ss","00:00:01","-frames:v","1",files.thumb)
     console.log("output file and thumbnail have been created!")
-    const mp4File = ffmpeg.FS("readFile",files.output)
+
+    const mp4File = ffmpeg.FS("readFile",files.output) // 여기서 에러 발생 
     const thumbFile = ffmpeg.FS("readFile",files.thumb)
 
     const mp4Blob = new Blob([mp4File.buffer], {type:"video/mp4"});
@@ -62,6 +63,7 @@ const handleDownload = async() => {
     actionBtn.innerText = "🔴 Start Recording";
     actionBtn.addEventListener("click",handleStartBtn);
     actionBtn.disabled = false; 
+    init();
 };
 
 
@@ -89,7 +91,7 @@ const handleStartBtn = async() => {
 const init = async() => {
     stream = await navigator.mediaDevices.getUserMedia({
         audio:false,
-        video:{width:"1024", height:"576"},
+        video: true,
     });
     video.srcObject = stream;
     video.play();   
