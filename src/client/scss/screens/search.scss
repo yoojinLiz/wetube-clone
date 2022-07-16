@@ -1,22 +1,11 @@
-.search__form {
+#searchPageForm {
     display: flex;
-    align-items: center;
-    position: relative;
-    width:500px;
-    max-width: 800px;
-    input {
-        all: unset;
-        border-radius: 5px;
-        border-color: black;
-        font-size: 18px;
-    }
-    button {
-        all: unset;
-        background-color: rgba(0,0,0,0);
-        text-align: center;
-        right: 15px;
-        position: absolute;
-        font-size: 18px;
-        cursor: pointer;
+    justify-content: center;
+
+}
+
+@media(min-width:650px) {
+    #searchPageForm {
+        display:none;
     }
 }

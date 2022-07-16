@@ -98,16 +98,17 @@ export const deleteVideo = async(req,res) => {
 
 export const search = async(req,res) => {
     const {keyword}=req.query;
-    console.log("keyword",keyword);
     let videos = [];
     let errorMessage;
     if(keyword) {
         videos = await Video.find({title: {$regex: new RegExp(keyword,"i")}}).populate("owner");
 	 }
-     else {
+    else if (keyword===undefined) {
+        return res.render("search",{pageTitle:"Search Video"});
+    }
+    else {
         errorMessage= "Please put your search keyword in the search box"
-     }
-     console.log("videos",videos)
+    }
     res.render("search",{pageTitle:"Search Video", videos, errorMessage});
 } 
 

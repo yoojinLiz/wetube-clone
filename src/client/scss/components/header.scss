@@ -1,90 +1,101 @@
+
 header {
-    margin: 5px 20px;
+    box-sizing: border-box;
+    padding: 3px 20px 0px 20px;
+    height: 52px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
     border-bottom: 0.5px solid rgba(0,0,0,0.3);
+    .header-left {
+        // header의 왼쪽 부분. 디자인 목적으로 사용. 
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 200px;
+    }
     .fa-bars {
-        margin: 0px 15px 0px 10px;
-        font-size: 22px;
-        color: $rose;
-        width: 2%;
+        margin: 0px 20px 0px 10px;
+        font-size: 20px;
+        color: black;
+        width: 20px;
     };
     .header__logo {
-        width:10%;
+        // youtube logo와 Dancetube span을 포함한 link(anchor) 
+        // width:160px;
         display: flex;
         align-items: center;
+        justify-content: space-evenly;
+        font-size: 24px;
         i {
-        font-size: 34px;
         color: $red;
+        margin-right: 8px;
+    
         };
         span {
-        font-size: 24px;
-        text-align: justify;
         color: black;
-        letter-spacing:-0.7mm;
-        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+        font-family: 'Caveat', cursive;
+        // margin-bottom: 1px;
         }
- 
     }
-    .search__form {
+    .header-center {
+        // header의 가운데 부분. 디자인 목적으로 사용. 
+        width: 100%; 
         display: flex;
-        align-items: center;
-        position: relative;
-        width:100%;
-        max-width: 600px;
-        height: 14px;
-        padding: 12px;
-        background-color: transparent;
-        border: 1px solid $mainBlack;
-        color: black;
-        border-radius: 1px;
-        .search__form-input {
-            all: unset;
-            font-size: 18px;
-            color: black;
-            background-color: white;
-            &::placeholder {
-                color: $mainBlack;
-            }
+        justify-content: center;
+    }
+
+    @media(max-width:650px) {
+        .header-center {
+            display:none;
         }
-        .search__form-btn {
-            all: unset;
-            background-color: rgba(0,0,0,0);
-            text-align: center;
-            right: 15px;
-            position: absolute;
-            font-size: 18px;
-            cursor: pointer;
-            color: black;
+    }
+
+    @media(min-width:651px) {
+        #list-search {
+            display:none;
         }
     }
     nav {
-        width:15%
+        // width:220px;
     }
     ul {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    
-    li {
-        margin-left: 25px;
-        font-size: 14px;
-        font-weight:600;
-        text-transform: uppercase;
-        position: relative;
-         #userEditBtn,  {
-            margin-top: 4px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center; 
+        li {
+            margin-left: 20px;
+            font-size: 20px; //로그 아웃시 나타나는 login, join 폰트 
+            position: relative;
+            // 아이콘마다 크기가 조금씩 달라서 margin으로 수평 맞춰주기 
+            #userEditBtn {
+                margin-top: 4px;
+            }
+            #uploadBtn,#logoutBtn,#searchBtn {
+                margin-top: 6px;
+            }
+            i {
+                font-size: 20px;
+            }
+            .hover-message {
+                position: absolute;
+                top: 40px;
+                right: -10px;
+                background-color: $red;
+                width: 63px;
+                height: 32px;
+                padding: 3px 3px;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                span{
+                    color: white;
+                    font-size: 14px;
+                }
+            }
         }
-        #uploadBtn,#logoutBtn {
-            margin-top: 6px;
-        }
-    }
-    i {
-        font-size: 20px;
-    }
+        
     }
     .header__btn {
         background-color: white;
@@ -97,24 +108,14 @@ header {
         height: 40px;
         border-radius: 50%;
     }
-    .hover-message {
-        position: absolute;
-        top: 40px;
-        right: -10px;
-        background-color: rgba(0,0,0,0.7);
-        width: 60px;
-        height: 30px;
-        padding: 2px 3px;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        span{
-            color: white;
-            font-size: 10px;
-        }
-    }
+
     .no-display {
         display:none;
     }
+
+// hearder 종료 
 }
+
+
+
+

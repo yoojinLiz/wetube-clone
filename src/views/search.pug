@@ -2,8 +2,14 @@ extends base.pug
 include mixins/video
 
 block content 
+    div#searchPageForm
+        form(method="GET" action="search").search__form
+            input(type="text", placeholder="제목으로 검색", name="keyword").search__form-input
+            button.search__form-btn
+                i.fas.fa-search
     div.video-grid
-        each video in videos    
-            +video(video)
+        if (videos)
+            each video in videos    
+                +video(video)
         else 
             span.empty__message No videos found 😢   
