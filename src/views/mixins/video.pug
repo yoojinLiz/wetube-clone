@@ -1,6 +1,7 @@
 mixin video(info)
   a(href=`/videos/${info.id}`).video-mixin 
-    div.video-mixin__thumb(style=`background-image:url(${info.thumbUrl});background-size:cover;background-position:center;`)
+    div.video-mixin__thumb-wrapper
+      div.video-mixin__thumb(style=`background-image:url(${info.thumbUrl});background-size:cover;background-position:center;`)
     div.video-mixin__data
       div.video-mixin__img
         div.img-wrapper
@@ -9,4 +10,4 @@ mixin video(info)
         span.video-mixin__title=info.title
         div.video-mixin__meta
           div #{info.owner.name} 
-          div #{info.meta.views}회 
+          div  #{info.meta.views}회 

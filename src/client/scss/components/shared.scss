@@ -6,10 +6,21 @@
 } 
 .video-grid { 
     display: grid;
-    column-gap: 20px;
+    column-gap: 10px;
     row-gap: 40px;
     grid-template-columns: repeat(4, minmax(0,1fr));
+    @media(max-width:1120px) {
+        grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+    @media(max-width:840px) {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+    @media(max-width:560px) {
+        grid-template-columns: repeat(1, minmax(0,1fr));  
+    }
 }
+
+
 .auth-switch{
     text-align: center;
     margin-top: 40px;
@@ -52,6 +63,7 @@
     // text input과 button을 포함. button 내에는 i이 포함되어 있음 
     box-sizing: border-box;
     width: 60%;
+    max-width: 600px;
     height: 36px;
     position: relative;
     display: flex;

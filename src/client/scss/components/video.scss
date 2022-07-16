@@ -1,33 +1,40 @@
-//video mixin
+
 .video-mixin {
+    // 썸네일 부분 div와, 썸네일 하단의 영상 정보들을 담은 div 2개로 나뉘어져있음 
+    .video-mixin__thumb-wrapper {
+        width: 100%;
+        max-width: 360px;
+    }
     .video-mixin__thumb {
-        height: 180px;
-        border-radius: 2px;
-        background-color: ivory;
+        padding-top:60%;
         margin-bottom: 15px;
     }
     .video-mixin__data {
         display: flex;
-        // padding: 0px 15px;
         .video-mixin__img {
-            width: 20%;
+            div {
+                margin-left: 2px;
+                margin-right: 10px;
+            }
         }
         .video-mixin__info {
-            width: 80%;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-        }
-        .video-mixin__title {
-            font-size: 16px;
-            display: block;                
-            color: black;
-        }
-        .video-mixin__meta {
-            margin-top: 5px;
-            font-size: 14px;
-            div{
-                margin-bottom: 5px;
+            // font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 500;
+            .video-mixin__title {
+                font-size: 16px;            
+                color: black;
+            }
+            .video-mixin__meta {
+                margin-top: 7px;
+                font-size: 16px;
+                div{
+                    color: rgba(0,0,0,0.5);
+                    margin-bottom: 3px;
+                    padding-left: 1px;
+                }
             }
         }
     }

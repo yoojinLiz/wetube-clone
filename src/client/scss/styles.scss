@@ -19,7 +19,9 @@
 @import "./screens/upload.scss";
 @import "./screens/search.scss";
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Hahmlet:wght@200;300;400&family=League+Gothic&family=Poor+Story&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Caveat:wght@400;500;600&family=Hahmlet:wght@200;300;400&family=League+Gothic&family=Nanum+Pen+Script&family=Neucha&family=Noto+Sans+KR:wght@300;400;500;700&family=Poiret+One&family=Poor+Story&family=Shadows+Into+Light&family=Teko:wght@400;500&display=swap');
+
+
 
 a {
 	color: inherit;
@@ -27,9 +29,7 @@ a {
 }
 
 body {
-	font-family: 'Poor Story', cursive;
-	// font-family: 'Hahmlet', serif;
-	// font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-family: $mainFont;
 	background-color : $mainWhite;
 	color: $mainBlack;
 	width: 100vw;
@@ -38,10 +38,7 @@ body {
 
 main {
 	padding: 0% 2%;
-	max-width: 100%;
-	// width: 100%;
-	margin: 0 auto;  //이 건 뭘까?
-	margin-top: 50px;
+	margin-top: 15px;
 }
 
 @keyframes goAway {
