@@ -15,11 +15,13 @@ const s3imageUploader = multerS3 ({
 	s3:s3,
 	bucket: "wetube-yoojinoh/images", // image 디렉토리로 지정 
 	acl: "public-read",// ACL(객체에 대한 접근 권한). public-read로 전달해야 files are publicly-read. 
+	contentType: multerS3.AUTO_CONTENT_TYPE,
 })
 const s3videoUploader = multerS3 ({
 	s3:s3,
 	bucket: "wetube-yoojinoh/videos", // videos 디렉토리로 지정 
 	acl: "public-read",// ACL(객체에 대한 접근 권한). public-read로 전달해야 files are publicly-read. 
+	contentType: multerS3.AUTO_CONTENT_TYPE,
 })
 
 // localsMiddleware는 server.js에서 app.use로 사용된다! 
