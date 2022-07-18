@@ -1,14 +1,15 @@
 extends base.pug
 
-block content   
-    form(method="POST")
-        input(placeholder="USERNAME", name="username", type="text", required).form-submit
-        input(placeholder="PASSWORD", name="password", type="password", required).form-password
-        input(placeholder="submit", type="submit" value="Login")#loginBtn.form-submit
-        include partials/social-login
-        if (errorMessage)
-            small=errorMessage
-    div.auth-switch
-        span Don't have an account? 
-        a(href="/join") Join now &rarr; 
-            
+block content  
+    div
+        form(method="POST")
+            input(placeholder="USERNAME", name="username", type="text", required).form-submit
+            input(placeholder="PASSWORD", name="password", type="password", required).form-password
+            input(placeholder="submit", type="submit" value="Login")#loginBtn.form-submit
+            include partials/social-login
+            if (errorMessage)
+                small=errorMessage
+        div.auth-switch
+            span Don't have an account? 
+            a(href="/join") Join now &rarr; 
+                

@@ -1,19 +1,20 @@
 extends base
 
-block content   
-    form(method="POST")
-        //- if (errorMessage)
-        //-     div.error-message #{errorMessage}
-        input(placeholder="NAME", name="name", type="text", required)
-        input(placeholder="EMAIL", name="email", type="email", required)
-        input(placeholder="USERNAME", name="username", type="text", required)
-        input(placeholder="PASSWORD", name="password", type="password", required)
-        input(placeholder="CONFIRM PASSWORD", name="password2", type="password", required)
-        input(placeholder="LOCATION", name="location", type="text")
-        input(placeholder="submit", type="submit" value="Join")#join-submit
-        include partials/social-login
-        
-    div.auth-switch
-        span Already have an account? 
-        a(href="/login") Log in now &rarr; 
-        
+block content
+    div
+        form(method="POST")
+            //- if (errorMessage)
+            //-     div.error-message #{errorMessage}
+            input(placeholder="NAME", name="name", type="text", required)
+            input(placeholder="EMAIL", name="email", type="email", required)
+            input(placeholder="USERNAME", name="username", type="text", required)
+            input(placeholder="PASSWORD", name="password", type="password", required)
+            input(placeholder="CONFIRM PASSWORD", name="password2", type="password", required)
+            input(placeholder="LOCATION", name="location", type="text")
+            input(placeholder="submit", type="submit" value="Join")#join-submit
+            include partials/social-login
+            
+        div.auth-switch
+            span Already have an account? 
+            a(href="/login") Log in now &rarr; 
+            
