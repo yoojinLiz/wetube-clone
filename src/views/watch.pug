@@ -4,7 +4,7 @@ include mixins/recommend-video.pug
 block content 
     div#watch-video
         div#video-watch-part
-            div
+            div#video-content-part
                 div#videoContainer(data-videoId=video._id)
                     video(src=video.fileUrl)#videoScreen
                     div#videoControlers

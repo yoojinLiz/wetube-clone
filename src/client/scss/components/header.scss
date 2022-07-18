@@ -1,7 +1,7 @@
 
 header {
     box-sizing: border-box;
-    padding: 3px 20px 0px 20px;
+    padding: 3px 15px 0px 10px;
     height: 52px;
     display: flex;
     justify-content: space-between;
@@ -14,12 +14,6 @@ header {
         align-items: center;
         width: 200px;
     }
-    .fa-bars {
-        margin: 0px 20px 0px 10px;
-        font-size: 20px;
-        color: black;
-        width: 20px;
-    };
     .header__logo {
         // youtube logo와 Dancetube span을 포함한 link(anchor) 
         // width:160px;

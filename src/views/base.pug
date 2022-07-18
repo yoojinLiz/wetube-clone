@@ -16,7 +16,8 @@ html(lang="en")
 		include partials/header.pug
 		main
 			div.error-message=errorMessage
-			block content
+			div#body-center-aligned
+				block content
 		include partials/footer.pug 
 		script(src="/static/js/main.js")
 		block scripts
