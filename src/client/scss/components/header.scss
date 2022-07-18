@@ -6,7 +6,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 0.5px solid rgba(0,0,0,0.3);
+    // border-bottom: 0.5px solid rgba(0,0,0,0.3);
+    background-color: white;
     .header-left {
         // header의 왼쪽 부분. 디자인 목적으로 사용. 
         display: flex;
