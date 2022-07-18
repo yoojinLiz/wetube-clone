@@ -2,10 +2,16 @@ import {createFFmpeg, fetchFile} from "@ffmpeg/ffmpeg"
 
 const actionBtn = document.getElementById("actionBtn");
 const video = document.getElementById("preview");
+const header__avatar = document.getElementById("header__avatar-img");
 
 let stream;
 let recorder;
 let videoFile; 
+
+
+header__avatar.setAttribute("crossorigin","anonymous");
+console.log(header__avatar);
+
 
 //오타의 가능성을 줄이기 위해 객체 생성! 
 const files = {
@@ -97,6 +103,8 @@ const init = async() => {
     video.play();   
 }
 init()
+
+
 
 actionBtn.addEventListener("click", handleStartBtn);
 

@@ -143,6 +143,12 @@ const handleEnded = () => {
     playIcon.classList.add("fa-play")
     fetch(`/api/videos/${id}/view`, {method:"POST"});
 }
+
+const resizeVideoHeight = () => {
+
+}
+
+
 play.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click",handleMute );
 volumeRange.addEventListener("input",handleVolumeChange);
@@ -155,3 +161,4 @@ video.addEventListener("mousemove", handleMouseMove);
 video.addEventListener("mouseleave", handleMouseLeave);
 video.addEventListener("click", handlePlayClick);
 window.addEventListener("keydown", shortcuts);
+window.addEventListener("resize", resizeVideoHeight);

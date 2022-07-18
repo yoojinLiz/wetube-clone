@@ -35,12 +35,12 @@ header
                 li
                     a(href=`/users/${loggedInUser._id}`)
                         div#header-avatar
-                            img(src=loggedInUser.avatarUrl).header__avatar
+                            img(src=loggedInUser.avatarUrl)#header__avatar-img
             else 
                 li
-                    a(href="/login") Login
+                    a(href="/login")#header-loginBtn Login
                 li
-                    a(href="/join").header__btn Join 
+                    a(href="/join")#header-joinBtn Join 
         
 
         

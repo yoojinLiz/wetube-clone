@@ -1,7 +1,7 @@
 
 header {
     box-sizing: border-box;
-    padding: 3px 15px 0px 10px;
+    padding: 3px 20px 0px 15px;
     height: 52px;
     display: flex;
     justify-content: space-between;
@@ -51,9 +51,6 @@ header {
             display:none;
         }
     }
-    nav {
-        // width:220px;
-    }
     ul {
         display: flex;
         justify-content: flex-end;
@@ -92,18 +89,19 @@ header {
         }
         
     }
-    .header__btn {
-        background-color: white;
-        color: $bg;
-        padding: 5px 10px;
-        border-radius: 5px;
-    }
-    .header__avatar {
-        width: 40px;
-        height: 40px;
+    #header__avatar-img {
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
+        margin-top: 7px;
     }
-
+    #header-loginBtn, #header-joinBtn {
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size:14px;
+    }
+    #header-joinBtn {
+        color: black;
+    }
     .no-display {
         display:none;
     }
