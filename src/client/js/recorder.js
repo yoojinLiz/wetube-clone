@@ -8,11 +8,6 @@ let stream;
 let recorder;
 let videoFile; 
 
-
-header__avatar.setAttribute("crossorigin","anonymous");
-console.log(header__avatar);
-
-
 //오타의 가능성을 줄이기 위해 객체 생성! 
 const files = {
     input: "recording.webm",

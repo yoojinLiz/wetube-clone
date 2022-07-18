@@ -103,7 +103,13 @@ export const videoUploadHandler= (req, res, next) => {
 }
 
 export const cors = (req, res, next) => {
-    res.header("Cross-Origin-Embedder-Policy", "require-corp");
-    res.header("Cross-Origin-Opener-Policy", "same-origin");
+    res.header("Cross-Origin-Embedder-Policy", "credentialless");
+    res.header("Cross-Origin-Opener-Policy", "cross-origin");
+	res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Credentials", true);
+	console.log("CORS is working ")
     next();
     };
+
+
