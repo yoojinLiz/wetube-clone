@@ -34,7 +34,7 @@ export const getLogin = (req,res) => res.render("login",{pageTitle:"Login"});
 export const postLogin = async(req,res) => {
     const {username, password} = req.body;
     console.log(username, password);
-    const user = await User.findOne({ username:"Lizzie" });
+    const user = await User.findOne({username});
     console.log(user);
     if (!user) {
         return res.status(400).render("login",{pageTitle:"Login", errorMessage:"Sorry, the account with this username does not exist."})
