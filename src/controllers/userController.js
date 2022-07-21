@@ -1,10 +1,12 @@
 import User from "../models/User"
 import Video from "../models/Video"
+import Comment from "../models/Comment"
 import bcrypt from "bcrypt"
 import fetch from "node-fetch"
 import session from "express-session";
 import req from "express/lib/request";
 import { redirect } from "express/lib/response";
+
 // import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
 
 export const getJoin = (req,res) => res.render("join",{pageTitle: "Create Account"});
@@ -33,7 +35,7 @@ export const postJoin = async(req,res) => {
 export const getLogin = (req,res) => res.render("login",{pageTitle:"Login"});
 export const postLogin = async(req,res) => {
     const {username, password} = req.body;
-    console.log(username, password);
+    console.log(username, password); 
     const user = await User.findOne({username});   
     console.log(user);
     if (!user) {
@@ -49,13 +51,53 @@ export const postLogin = async(req,res) => {
     console.log("LOG USER IN!")
     return res.redirect("/");
 };
-export const logout = (req,res) => {
+export const getUnlink = async(req,res) => {
+    console.log(req.session.user);
+    console.log(req.session.loggedInUser);
+    if (req.session.loggedInUser.kakaoLoginOnly) {
+        const baseUrl = "https://kapi.kakao.com/v1/user/unlink"; 
+        const config = {
+            target_id_type: "user_id",
+            target_id: req.session.loggedInUser.kakaoId,
+        };
+        const ACCESS_TOKEN = req.session.loggedInUser.kakaoAccessToken ; 
+        // const ACCESS_TOKEN = "bzFHjMUeluZu80UmV2P25cjvVlfOJmUHp00KFDkxCisM1AAAAYIc7dsN" ; 
+        const params = new URLSearchParams(config).toString();
+        const finalUrl= `${baseUrl}?${params}`;
+        const unlinkRequest= await fetch(finalUrl, {
+            method:"POST",
+            headers: {
+                Authorization: `Bearer ${ACCESS_TOKEN}`
+            }
+        });
+        console.log("unlinkRequest",unlinkRequest);
+    }
+    if (req.session.loggedInUser.githubLoginOnly) {
+        // 
+    }
+
     req.session.user = null;
-    res.locals.loggedInUser = req.session.user;
     req.session.loggedIn = false;
+    res.locals.loggedInUser = req.session.user;
     res.locals.loggedIn = false;
+    
+    req.session.destroy();
+    return res.redirect("/");
+
+
+}
+
+export const logout = async(req,res) => {
+
+    req.session.user = null;
+    req.session.loggedIn = false;
+    res.locals.loggedInUser = req.session.user;
+    res.locals.loggedIn = false;
+    
+
     req.flash("info"," Bye! ");
 	console.log("loggedInUser", res.locals);
+    req.session.destroy();
     return res.redirect("/");
     
 }
@@ -91,7 +133,56 @@ export const postEdit= async(req,res) => {
     }
     return res.redirect("/users/edit")
 };
-export const remove = (req,res) => res.render("remove");
+export const getRemove= (req,res) => {
+    return res.render("remove");
+}; 
+export const postRemove = async(req,res) => {
+    const {username,kakaoLoginOnly,githubLoginOnly } = req.session.loggedInUser;
+    const user = await User.findOne({username});
+
+    if (!kakaoLoginOnly && !githubLoginOnly) {
+        const {password} = req.body;
+        const ok= await bcrypt.compare(password,user.password);
+        if(!ok){
+            return res.status(400).render("login",{pageTitle:"Login", errorMessage:"비밀번호가 틀립니다."})
+        }
+    }
+    if (!user) {
+        return res.status(400).render("remove",{pageTitle:"remove", errorMessage:"계정이 존재하지 않습니다."})
+    }
+    if(kakaoLoginOnly) {
+        //kakao unlink
+        const baseUrl = "https://kapi.kakao.com/v1/user/unlink"; 
+        const config = {
+            target_id_type: "user_id",
+            target_id: user.kakaoId,
+        };
+        const params = new URLSearchParams(config).toString();
+        const finalUrl= `${baseUrl}?${params}`;
+        const unlinkRequest= await fetch(finalUrl, {
+            method:"POST",
+            headers: {
+                Authorization: `KakaoAK ${process.env.KA_ADMIN_KEY}`
+            }
+        });
+    }
+    if(user.githubLoginOnly) {
+        //github unlink
+    }
+    const commentRemove = await Comment.deleteMany({owner: user._id});
+    const videoRemove = await Video.deleteMany({owner: user._id});
+    const userRemove = await User.findByIdAndRemove(user._id);
+
+    req.session.user = null;
+    req.session.loggedIn = false;
+
+    res.locals.loggedInUser = req.session.user;
+    res.locals.loggedIn = false;
+    req.session.destroy();
+
+    return res.redirect("/");
+};
+
 export const startGithubLogin =(req,res) => {
     const baseUrl = "https://github.com/login/oauth/authorize";
     const config = {
@@ -102,7 +193,7 @@ export const startGithubLogin =(req,res) => {
     const params = new URLSearchParams(config).toString();
     const finalUrl= `${baseUrl}?${params}`;
     res.redirect(finalUrl);
-}
+};
 export const finishGithubLogin = async(req,res) => {
     const baseUrl = "https://github.com/login/oauth/access_token";
     const config = {
@@ -199,6 +290,8 @@ export const startKakaoLogin= (req,res) => {
     res.redirect(finalUrl);
 };
 export const finishKakaoLogin= async(req,res) => {
+    let access_token ;
+    let kakaoUserId ; 
     const baseUrl = "https://kauth.kakao.com/oauth/token"; 
     const config = {
         grant_type:"authorization_code", 
@@ -215,7 +308,7 @@ export const finishKakaoLogin= async(req,res) => {
         }
     })).json();
     if("access_token" in tokenRequest) {
-        const {access_token} = tokenRequest;
+        access_token = tokenRequest.access_token;
         const apiUrl = "https://kapi.kakao.com/v2/user/me";
         const userData = await(
             await fetch(apiUrl, { 
@@ -224,8 +317,32 @@ export const finishKakaoLogin= async(req,res) => {
                     Authorization: `Bearer ${access_token}`
                 }
                 })).json();
-        console.log("userData", userData);
+        kakaoUserId = userData.id ; 
+        console.log("userData", userData, "access_token", access_token, "kakaoUserId", kakaoUserId);
+      
+        // 이메일 동의 없는 경우 시작
+        if (userData.kakao_account.email_needs_agreement) {
+            const unlinkBaseUrl = "https://kapi.kakao.com/v1/user/unlink"; 
+            const unlinkConfig = {
+                target_id_type: "user_id",
+                target_id: kakaoUserId,
+            };
+            const params = new URLSearchParams(unlinkConfig).toString();
+            const finalUrl= `${unlinkBaseUrl}?${params}`;
+            const unlinkRequest= await fetch(finalUrl, {
+                method:"POST",
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                }
+            });
+            console.log("unlinkRequest",unlinkRequest);
+            req.flash("error","카카오 간편 로그인을 위해서는 이메일 제공에 동의해주세요.");
+            return res.status(400).redirect("/login");
+        }
+        // 이메일 동의 없는 경우 끝
+
         let user = await User.findOne({email:userData.kakao_account.email});
+        console.log("user",user)
         if(!user) { 
             user = await User.create({
                     avatarUrl: userData.properties.profile_image,
@@ -234,8 +351,16 @@ export const finishKakaoLogin= async(req,res) => {
                     email: userData.kakao_account.email, 
                     password: "", 
                     location: "", 
-                    githubLoginOnly: true,})
-        }
+                    githubLoginOnly: false,
+                    kakaoLoginOnly : true,
+                    kakaoId : kakaoUserId,
+                })
+        console.log("user is created!")
+            }
+        console.log(user.kakaoAccessToken);
+        user = await User.findByIdAndUpdate(user._id, {kakaoAccessToken : access_token});
+        
+        console.log(user.kakaoAccessToken);
         req.session.loggedIn = true;
         req.session.loggedInUser = user;
         return res.redirect("/");  
@@ -245,3 +370,8 @@ export const finishKakaoLogin= async(req,res) => {
     }   
 
 };
+
+
+
+
+

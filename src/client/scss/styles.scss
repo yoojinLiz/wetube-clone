@@ -14,6 +14,7 @@
 // @import "./screens/search.scss";
 @import "./screens/profile.scss";
 @import "./screens/.edit-profile__password.scss";
+@import "./screens/remove.scss";
 @import "./screens/watch.scss";
 @import "./screens/home.scss";
 @import "./screens/upload.scss";
@@ -30,6 +31,7 @@ a {
 
 body {
 	font-family: $mainFont;
+	letter-spacing:0.3mm;
 	background-color : $mainWhite;
 	color: $mainBlack;
 	width: 100%;
@@ -61,18 +63,25 @@ main {
   
   .message {
 	position: absolute;
-	top: 10px;
+	top: 15px;
 	left: 0;
 	right: 0;
 	margin: 0 auto;
-	max-width: 200px;
-	padding: 10px 20px;
-	border-radius: 10000px;
+	// width: 400px;
+	padding: 10px;
 	text-align: center;
 	animation: goAway 0.5s ease-in-out forwards;
-	animation-delay: 1s;
+	animation-delay: 2s;
+	font-size: 20px;
 	&.error {
-	  background-color: tomato;
-	  color: white;
+	  background-color: #FEE500;
+	  color: black;
 	}
+	&.info {
+		background-color: green ;
+		color: black;
+  }
+
+
+
   }

@@ -14,6 +14,8 @@ block content
             input(placeholder="username", name="username", type="text", value=loggedInUser.username, required).form-text
             input(placeholder="location", name="location", type="text", value=loggedInUser.location, required).form-text
             input(placeholder="submit", type="submit" value="Update Profile").form-submit#edit-profile-submit
-            if (!loggedInUser.githubLoginOnly)
+            if (!loggedInUser.kakaoLoginOnly && !loggedInUser.githubLoginOnly )
                 div.edit-profile__password
-                    a(href="change-password") Change Password &rarr;
+                    a(href="change-password") 비밀번호 변경하기 &rarr;
+            div.edit-profile__remove
+                a(href="remove") 계정 삭제하기 &rarr;

@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
 	location : {type: String, uppercase:true, trim:true},
 	avatarUrl: {type: String, default: "https://wetube-yoojinoh.s3.ap-northeast-2.amazonaws.com/7f86aebc4f4caa0bac277b58db89a4a6" },
 	githubLoginOnly:{type: Boolean, default: false },
+	kakaoLoginOnly: {type: Boolean, default: false },
+	kakaoId: {type: Number, default: false },
 	videos: [{type: mongoose.Schema.Types.ObjectId, ref:"Video",required:true}]
 });
 

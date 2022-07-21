@@ -1,0 +1,13 @@
+extends base.pug
+
+block content
+    div#remove-content
+        p 계정 삭제 시, 업로드한 비디오와 작성한 댓글이 모두 삭제됩니다.
+        if (!loggedInUser.kakaoLoginOnly && !loggedInUser.githubLoginOnly)
+            p 계정 삭제를 원하시면 비밀번호를 입력 후 계정 삭제하기 버튼을 눌러주세요. 
+        p 계정 삭제를 원하시면 계정 삭제하기 버튼을 눌러주세요. 
+            form(method="POST")#userRemoveForm
+                if (!loggedInUser.kakaoLoginOnly && !loggedInUser.githubLoginOnly)
+                    input(type="password", placeholder="PASSWORD", name="password").form-password
+                input(type="submit" value="계정 삭제하기")#user-remove-submit
+        
