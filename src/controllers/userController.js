@@ -36,7 +36,7 @@ export const getLogin = (req,res) => res.render("login",{pageTitle:"Login"});
 export const postLogin = async(req,res) => {
     const {username, password} = req.body;
     console.log(username, password); 
-    const user = await User.findOne({username});   
+    const user = await User.findOne({username: "yj.oh"});   
     console.log(user);
     if (!user) {
         return res.status(400).render("login",{pageTitle:"Login", errorMessage:"Sorry, the account with this username does not exist."})
@@ -166,9 +166,45 @@ export const postRemove = async(req,res) => {
             }
         });
     }
-    if(user.githubLoginOnly) {
-        //github unlink
-    }
+    // 모르게따.. 깃헙 언링크는 ^^:;;;; 
+    // if(user.githubLoginOnly) {
+    //     //github unlink access token을 만료 시키자
+        
+    //     //Authentication
+
+        
+    //     const baseUrl = "https://github.com/login/oauth/access_token";
+    //     const config = {
+    //         client_id:process.env.GH_CLIENT,
+    //         client_secret:process.env.GH_SECRET,
+    //         code: req.query.code, 
+    //     };
+    //     const params = new URLSearchParams(config).toString();
+    //     const finalUrl= `${baseUrl}?${params}`;
+    //     console.log("finalUrl", finalUrl)
+    //     const tokenRequest= await(await fetch(finalUrl, {
+    //             method:"POST",
+    //             headers: {
+    //                 Accept:"application/json"
+    //             }
+    //     })).json();
+    //     console.log("tokenRequest",tokenRequest);
+    //     if("access_token" in tokenRequest) {
+    //         const {access_token} = tokenRequest;
+    //         const client_id = process.env.GH_CLIENT
+    //         const apiUrl = "https://api.github.com"
+    //         const userData = await(
+    //             await fetch(`${apiUrl}/${client_id}/token`, { 
+    //                 method: "DELETE",
+    //                 headers: { 
+    //                     Accept: "application/vnd.github+json",
+    //                     Authorization: `token ${access_token}`
+    //                 },
+    //                  })).json();
+    //         console.log("userData", userData);
+    //         }
+    // }
+
     const commentRemove = await Comment.deleteMany({owner: user._id});
     const videoRemove = await Video.deleteMany({owner: user._id});
     const userRemove = await User.findByIdAndRemove(user._id);
@@ -229,8 +265,9 @@ export const finishGithubLogin = async(req,res) => {
         console.log("emailData", emailData)
         const emailObj = emailData.find((email) => email.primary===true && email.verified===true); 
         if (!emailObj) {
-        // error notification
-        console.log("no email object");
+            console.log("no email object");
+            req.flash("error","gitHub에서 사용 가능한 이메일 정보가 없습니다. 일반 회원가입을 진행해주세요.");
+            return res.status(400).redirect("/login");
         }
         let user = await User.findOne({email:emailObj.email});
         console.log("this is the existing user info", user);
@@ -249,7 +286,7 @@ export const finishGithubLogin = async(req,res) => {
         req.session.loggedInUser = user;
         return res.redirect("/");        
     } else { 
-    //error notification 
+    req.flash("error","문제가 발생하였습니다. 다시 시도해주세요.");
     console.log("no access_token");
     }          
 }
