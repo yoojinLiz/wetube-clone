@@ -68,8 +68,8 @@ export const postUpload = async (req, res) => {
             title,
             description,
             hashtags: Video.hashtagFormatting(hashtags),
-            fileUrl: res.locals.isHeroku? video[0].location : video[0].path,
-            thumbUrl: res.locals.isHeroku? thumb[0].location : thumb[0].path,
+            fileUrl: res.locals.isHeroku? video[0].location : `http://localhost:4000/${video[0].path}`,
+            thumbUrl: res.locals.isHeroku? thumb[0].location : `http://localhost:4000/${thumb[0].path}`,
             owner: _id
         });
         const user = await User.findById(_id);

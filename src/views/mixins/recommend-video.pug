@@ -1,7 +1,7 @@
 mixin recommendvideo(info)
   a(href=`/videos/${info.id}`).rec-video-mixin 
     div.rec-thumb-wrapper
-      div.rec-video-mixin__thumb(style=`background-image:url(/${info.thumbUrl});background-size:cover;background-position:center;`)
+      div.rec-video-mixin__thumb(style=`background-image:url(${info.thumbUrl});background-size:cover;background-position:center;`)
     div.rec-video-mixin__info
       span.rec-video-mixin__title=info.title
       div.rec-video-mixin__meta
