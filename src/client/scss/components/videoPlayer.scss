@@ -8,6 +8,7 @@
 #videoScreen {
     // 영상이 플레이 되는 화면 
     background-color: black;
+    max-height: 70vh; 
 }
 #videoFullScreen {
     // 전체 화면 모드일 때는 max-height 가 적용되지 않도록 크기 제한 없는 id값을 부여 

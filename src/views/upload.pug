@@ -8,7 +8,7 @@ block content
             button#actionBtn 🔴 Start Recording
         form(method="POST", enctype="multipart/form-data")
                 label(for="video") Video File
-                input(type="file", accept="video/*", required, id="video", name="video").form-file
+                input(type="file", accept="video/mp4", required, id="video", name="video").form-file
                 label(for="thumb") Thumbnail File
                 input(type="file", accept="image/*", required, id="thumb", name="thumb").form-file
                 input(name="title", type="text", placeholder="Title", required, maxlength=80).form-text

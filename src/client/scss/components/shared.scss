@@ -12,6 +12,7 @@
     display: grid;
     column-gap: 10px;
     row-gap: 40px;
+    width: 100%;
     grid-template-columns: repeat(5, minmax(0,1fr));
     @media(max-width:1400px) {
         grid-template-columns: repeat(4, minmax(0,1fr));
