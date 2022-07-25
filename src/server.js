@@ -15,12 +15,6 @@ app.use(logger);
 
 app.set("view engine","pug");
 app.set("views",process.cwd()+"/src/views");
-// app.use((req, res, next) => {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//     res.header("Access-Control-Allow-Credentials", true);
-//     next();
-//     });
 app.use(express.urlencoded({extended: true}));
 app.use(express.text()); 
 app.use(express.json()); //string을 받아서 json으로 바꿔주는 middleware (JSON.parse를 해준다고 생각하면 됨  )
