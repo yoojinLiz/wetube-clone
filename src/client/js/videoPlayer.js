@@ -69,7 +69,7 @@ const handleVolumeChange = (event) =>  {
 const formatTime = (seconds) => {
 	return new Date(seconds *1000).toISOString().substring(14,19);
 }
-const handleLoadedMetaData = (event) => {
+const putDuration = (event) => {
 	totalTime.innerText =	formatTime(Math.floor(video.duration));
     timeline.max = Math.floor(video.duration);
 }
@@ -152,7 +152,7 @@ const resizeVideoHeight = () => {
 play.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click",handleMute );
 volumeRange.addEventListener("input",handleVolumeChange);
-video.addEventListener("canplay", handleLoadedMetaData);
+video.addEventListener("timeupdate", putDuration);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("ended", handleEnded);
 timeline.addEventListener("input", handleTimelineChange);
